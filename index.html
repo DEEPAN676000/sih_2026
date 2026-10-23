@@ -102,6 +102,21 @@
       background: rgba(11, 25, 44, 0.96);
       backdrop-filter: blur(12px);
     }
+
+    /* Attractive Slide-Down Animation */
+    @keyframes slideDownDropdown {
+      0% {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .animate-slide-down {
+      animation: slideDownDropdown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   </style>
 </head>
 <body class="bg-gov-surface font-sans text-slate-800 antialiased min-h-screen flex flex-col">
@@ -354,17 +369,132 @@
     <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0 transition-all duration-300 z-30">
       
       <!-- Role Switcher Quick Bar for SIH Evaluation -->
-      <div class="p-3 bg-slate-50 border-b border-slate-200">
-        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-          Demo Role Simulator
-        </label>
-        <select id="roleSelector" onchange="changeActiveRole(this.value)" class="w-full text-xs font-semibold bg-white border border-slate-300 rounded-md p-1.5 text-slate-700 focus:outline-none focus:border-gov-teal">
-          <option value="rb_officer">Regulation Bureau (RB) Officer</option>
-          <option value="pgrc_officer">Public Grievance Cell (PGRC) Officer</option>
-          <option value="admin">System Administrator</option>
-          <option value="ro_officer">Regional Officer (WRO / Mumbai)</option>
-          <option value="senior_mgmt">Senior Management (Advisor/MS)</option>
-        </select>
+      <div class="p-3 bg-gradient-to-b from-slate-50 to-slate-100/70 border-b border-slate-200 relative">
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="block text-[10px] font-extrabold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-gov-teal animate-pulse"></span>
+            Demo Role Simulator
+          </label>
+          <span class="text-[9px] font-bold text-gov-teal bg-gov-teal/10 px-1.5 py-0.5 rounded uppercase">Live Switch</span>
+        </div>
+
+        <!-- Custom Elegant Dropdown Trigger -->
+        <div class="relative" id="customRoleDropdownContainer">
+          <button type="button" id="roleDropdownTrigger" onclick="toggleRoleDropdown(event)" class="w-full bg-white hover:bg-slate-50/90 border border-slate-200 hover:border-gov-teal/60 rounded-xl p-2.5 text-left flex items-center justify-between shadow-sm hover:shadow transition-all group focus:outline-none focus:ring-2 focus:ring-gov-teal/30">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <div id="triggerRoleAvatar" class="w-7 h-7 rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
+                RB
+              </div>
+              <div class="min-w-0">
+                <div id="triggerRoleTitle" class="text-xs font-black text-slate-800 truncate leading-tight group-hover:text-gov-navy">
+                  Regulation Bureau (RB) Officer
+                </div>
+                <div id="triggerRoleSub" class="text-[10px] text-slate-400 truncate leading-tight mt-0.5">
+                  Dr. Arvind Joshi • Director
+                </div>
+              </div>
+            </div>
+            <div class="shrink-0 ml-1.5 text-slate-400 group-hover:text-gov-teal transition-colors">
+              <svg id="triggerChevron" class="w-4 h-4 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </div>
+          </button>
+
+          <!-- Hidden Native Select (maintains system state compatibility) -->
+          <select id="roleSelector" onchange="changeActiveRole(this.value)" class="hidden">
+            <option value="rb_officer">Regulation Bureau (RB) Officer</option>
+            <option value="pgrc_officer">Public Grievance Cell (PGRC) Officer</option>
+            <option value="admin">System Administrator</option>
+            <option value="ro_officer">Regional Officer (WRO / Mumbai)</option>
+            <option value="senior_mgmt">Senior Management (Advisor/MS)</option>
+          </select>
+
+          <!-- Attractive Slide-Down Floating Menu -->
+          <div id="roleDropdownMenu" class="hidden absolute left-0 right-0 top-full mt-2 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/80 p-2 z-50 space-y-1 divide-y divide-slate-100/60 max-h-80 overflow-y-auto">
+            
+            <!-- Option 1: RB Officer -->
+            <button type="button" onclick="selectRoleOption('rb_officer')" class="role-opt-btn w-full text-left p-2 rounded-xl flex items-center justify-between hover:bg-blue-50/80 transition-all group" data-role="rb_officer">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-800 border border-blue-200 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                  RB
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-blue-900 leading-tight">Regulation Bureau (RB) Officer</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-blue-700 leading-tight mt-0.5">Dr. Arvind Joshi • Director</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0" data-check="rb_officer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
+            <!-- Option 2: PGRC Officer -->
+            <button type="button" onclick="selectRoleOption('pgrc_officer')" class="role-opt-btn w-full text-left p-2 pt-2.5 rounded-xl flex items-center justify-between hover:bg-purple-50/80 transition-all group" data-role="pgrc_officer">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-purple-100 text-purple-800 border border-purple-200 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                  PG
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-purple-900 leading-tight">Public Grievance Cell (PGRC)</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-purple-700 leading-tight mt-0.5">Smt. Sunita Sharma • Dy Director</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0 hidden" data-check="pgrc_officer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
+            <!-- Option 3: System Administrator -->
+            <button type="button" onclick="selectRoleOption('admin')" class="role-opt-btn w-full text-left p-2 pt-2.5 rounded-xl flex items-center justify-between hover:bg-slate-100 transition-all group" data-role="admin">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-slate-200 text-slate-800 border border-slate-300 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-slate-800 group-hover:text-white transition-colors">
+                  AD
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-slate-900 leading-tight">System Administrator</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-slate-600 leading-tight mt-0.5">Full System & Bureau Access</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0 hidden" data-check="admin">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
+            <!-- Option 4: Regional Officer -->
+            <button type="button" onclick="selectRoleOption('ro_officer')" class="role-opt-btn w-full text-left p-2 pt-2.5 rounded-xl flex items-center justify-between hover:bg-emerald-50/80 transition-all group" data-role="ro_officer">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                  RO
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-emerald-900 leading-tight">Regional Officer (WRO)</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-emerald-700 leading-tight mt-0.5">Western Region • Mumbai HQ</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0 hidden" data-check="ro_officer">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
+            <!-- Option 5: Senior Management -->
+            <button type="button" onclick="selectRoleOption('senior_mgmt')" class="role-opt-btn w-full text-left p-2 pt-2.5 rounded-xl flex items-center justify-between hover:bg-amber-50/80 transition-all group" data-role="senior_mgmt">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 border border-amber-200 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors">
+                  MS
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-amber-900 leading-tight">Senior Management</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-amber-800 leading-tight mt-0.5">Advisor / Member Secretary</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0 hidden" data-check="senior_mgmt">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
+          </div>
+        </div>
       </div>
 
       <!-- Navigation Links -->
@@ -1845,6 +1975,7 @@
     // 3. UI RENDERING & COMPONENT BUILDERS
     // ==========================================
     function initUI() {
+      changeActiveRole(currentRole, false);
       renderDashboardStats();
       renderRecentComplaintsTable();
       renderAllComplaintsTable();
@@ -1902,38 +2033,156 @@
       }
     }
 
-    // Role Simulator
-    function changeActiveRole(role) {
+    // Role Metadata Definitions for UI
+    const ROLE_METADATA = {
+      'rb_officer': {
+        avatarText: 'RB',
+        avatarBg: 'bg-gradient-to-tr from-blue-600 to-blue-400 text-white',
+        title: 'Regulation Bureau (RB) Officer',
+        sub: 'Dr. Arvind Joshi • Director',
+        officer: 'Dr. Arvind Joshi',
+        badge: 'Regulation Bureau (RB) Officer',
+        avatarDisplay: 'AJ'
+      },
+      'pgrc_officer': {
+        avatarText: 'PG',
+        avatarBg: 'bg-gradient-to-tr from-purple-600 to-purple-400 text-white',
+        title: 'Public Grievance Cell (PGRC)',
+        sub: 'Smt. Sunita Sharma • Dy Director',
+        officer: 'Smt. Sunita Sharma',
+        badge: 'PGRC Officer',
+        avatarDisplay: 'SS'
+      },
+      'admin': {
+        avatarText: 'AD',
+        avatarBg: 'bg-gradient-to-tr from-slate-800 to-slate-600 text-white',
+        title: 'System Administrator',
+        sub: 'Full System & Bureau Access',
+        officer: 'Shri K. Ramanathan',
+        badge: 'System Administrator (Full Access)',
+        avatarDisplay: 'KR'
+      },
+      'ro_officer': {
+        avatarText: 'RO',
+        avatarBg: 'bg-gradient-to-tr from-emerald-600 to-emerald-400 text-white',
+        title: 'Regional Officer (WRO)',
+        sub: 'Western Region • Mumbai HQ',
+        officer: 'Shri D. V. Kulkarni',
+        badge: 'Western Regional Officer (WRO)',
+        avatarDisplay: 'DK'
+      },
+      'senior_mgmt': {
+        avatarText: 'MS',
+        avatarBg: 'bg-gradient-to-tr from-amber-600 to-amber-500 text-slate-950 font-black',
+        title: 'Senior Management',
+        sub: 'Advisor / Member Secretary',
+        officer: 'Prof. T. G. Sitharam',
+        badge: 'Senior Management (Advisor/MS)',
+        avatarDisplay: 'MS'
+      }
+    };
+
+    // Toggle Role Dropdown Menu with slide down animation
+    function toggleRoleDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('roleDropdownMenu');
+      const chevron = document.getElementById('triggerChevron');
+      if (!menu) return;
+
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        menu.classList.add('animate-slide-down');
+        if (chevron) chevron.classList.add('rotate-180', 'text-gov-teal');
+      } else {
+        closeRoleDropdown();
+      }
+    }
+
+    function closeRoleDropdown() {
+      const menu = document.getElementById('roleDropdownMenu');
+      const chevron = document.getElementById('triggerChevron');
+      if (menu && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        menu.classList.remove('animate-slide-down');
+      }
+      if (chevron) {
+        chevron.classList.remove('rotate-180', 'text-gov-teal');
+      }
+    }
+
+    // Select role option from the attractive slide-down menu
+    function selectRoleOption(role) {
+      changeActiveRole(role);
+      closeRoleDropdown();
+    }
+
+    // Close on click outside or escape key
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('customRoleDropdownContainer');
+      if (container && !container.contains(e.target)) {
+        closeRoleDropdown();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeRoleDropdown();
+      }
+    });
+
+    // Role Simulator State Synchronization
+    function changeActiveRole(role, notify = true) {
       currentRole = role;
+      const meta = ROLE_METADATA[role] || ROLE_METADATA['rb_officer'];
+
+      // 1. Update Header User Profile Pill
       const nameEl = document.getElementById('userNameDisplay');
       const roleEl = document.getElementById('userRoleDisplay');
       const avatarEl = document.getElementById('userAvatar');
 
-      if (role === 'rb_officer') {
-        nameEl.textContent = 'Dr. Arvind Joshi';
-        roleEl.textContent = 'Regulation Bureau (RB) Officer';
-        avatarEl.textContent = 'AJ';
-        showToast('Switched to Regulation Bureau (RB) Officer profile', 'info');
-      } else if (role === 'pgrc_officer') {
-        nameEl.textContent = 'Smt. Sunita Sharma';
-        roleEl.textContent = 'PGRC Officer';
-        avatarEl.textContent = 'SS';
-        showToast('Switched to Public Grievance Redressal Cell profile', 'info');
-      } else if (role === 'admin') {
-        nameEl.textContent = 'Shri K. Ramanathan';
-        roleEl.textContent = 'System Administrator';
-        avatarEl.textContent = 'KR';
-        showToast('Switched to System Administrator profile (Full Access)', 'info');
-      } else if (role === 'ro_officer') {
-        nameEl.textContent = 'Shri D. V. Kulkarni';
-        roleEl.textContent = 'Western Regional Officer (WRO)';
-        avatarEl.textContent = 'DK';
-        showToast('Switched to Regional Officer (WRO Mumbai)', 'info');
-      } else if (role === 'senior_mgmt') {
-        nameEl.textContent = 'Prof. T. G. Sitharam';
-        roleEl.textContent = 'Senior Management (Advisor/MS)';
-        avatarEl.textContent = 'MS';
-        showToast('Switched to Senior Management profile', 'info');
+      if (nameEl) nameEl.textContent = meta.officer;
+      if (roleEl) roleEl.textContent = meta.badge;
+      if (avatarEl) avatarEl.textContent = meta.avatarDisplay;
+
+      // 2. Update Custom Slide-Down Dropdown Trigger Display
+      const triggerAvatar = document.getElementById('triggerRoleAvatar');
+      const triggerTitle = document.getElementById('triggerRoleTitle');
+      const triggerSub = document.getElementById('triggerRoleSub');
+
+      if (triggerAvatar) {
+        triggerAvatar.textContent = meta.avatarText;
+        triggerAvatar.className = `w-7 h-7 rounded-lg ${meta.avatarBg} text-xs flex items-center justify-center shadow-sm shrink-0 transition-colors`;
+      }
+      if (triggerTitle) triggerTitle.textContent = meta.title;
+      if (triggerSub) triggerSub.textContent = meta.sub;
+
+      // 3. Update Checkmark Icons in Dropdown Menu
+      document.querySelectorAll('.role-check-icon').forEach(icon => {
+        const checkRole = icon.getAttribute('data-check');
+        if (checkRole === role) {
+          icon.classList.remove('hidden');
+        } else {
+          icon.classList.add('hidden');
+        }
+      });
+
+      // 4. Highlight active option item
+      document.querySelectorAll('.role-opt-btn').forEach(btn => {
+        const btnRole = btn.getAttribute('data-role');
+        if (btnRole === role) {
+          btn.classList.add('bg-slate-100', 'ring-1', 'ring-slate-300');
+        } else {
+          btn.classList.remove('bg-slate-100', 'ring-1', 'ring-slate-300');
+        }
+      });
+
+      // 5. Update Hidden Native Select (maintains compatibility)
+      const selectEl = document.getElementById('roleSelector');
+      if (selectEl) selectEl.value = role;
+
+      if (notify) {
+        showToast(`Switched active workspace to ${meta.title}`, 'info');
       }
     }
 
