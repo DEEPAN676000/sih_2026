@@ -1,4 +1,11 @@
-export type Role = 'rb_officer' | 'pgrc_officer' | 'admin' | 'ro_officer' | 'senior_mgmt';
+export type Role = 
+  | 'college_inst' 
+  | 'university' 
+  | 'rb_officer' 
+  | 'pgrc_officer' 
+  | 'admin' 
+  | 'ro_officer' 
+  | 'senior_mgmt';
 
 export type Priority = 'Urgent' | 'High' | 'Medium' | 'Low';
 
@@ -79,3 +86,19 @@ export interface NotificationItem {
   targetCase?: string;
   read: boolean;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
+  orgName?: string;
+  aicteId?: string;
+  phone?: string;
+  status: 'active' | 'pending_approval' | 'suspended';
+  passwordHash?: string;
+  registeredAt: string;
+  approvedBy?: string;
+  approvedAt?: string;
+}
+

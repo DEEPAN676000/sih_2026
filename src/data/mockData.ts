@@ -1,4 +1,91 @@
-import { Institution, Complaint, NotificationItem } from '../types';
+import { Institution, Complaint, NotificationItem, User } from '../types';
+
+export const INITIAL_USERS: User[] = [
+  {
+    id: 'usr-1',
+    name: 'Dr. Arvind Joshi',
+    email: 'arvind.joshi@aicte-india.org',
+    role: 'rb_officer',
+    orgName: 'AICTE Headquarters (New Delhi)',
+    aicteId: 'GOV-RB-01',
+    phone: '+91 11 2958 1000',
+    status: 'active',
+    passwordHash: 'AICTE@RB2026',
+    registeredAt: '2026-01-10'
+  },
+  {
+    id: 'usr-2',
+    name: 'Smt. Sunita Sharma',
+    email: 'sunita.sharma@aicte-india.org',
+    role: 'pgrc_officer',
+    orgName: 'AICTE Headquarters (New Delhi)',
+    aicteId: 'GOV-PGRC-02',
+    phone: '+91 11 2958 1002',
+    status: 'active',
+    passwordHash: 'AICTE@PGRC2026',
+    registeredAt: '2026-01-12'
+  },
+  {
+    id: 'usr-3',
+    name: 'Shri K. Ramanathan',
+    email: 'admin@aicte-india.gov.in',
+    role: 'admin',
+    orgName: 'AICTE IT Enclave / NIC',
+    aicteId: 'GOV-ADM-01',
+    phone: '+91 11 2958 1010',
+    status: 'active',
+    passwordHash: 'AICTE@Admin2026',
+    registeredAt: '2026-01-01'
+  },
+  {
+    id: 'usr-4',
+    name: 'Shri D. V. Kulkarni',
+    email: 'wro.mumbai@aicte-india.org',
+    role: 'ro_officer',
+    orgName: 'Western Regional Office (Mumbai)',
+    aicteId: 'GOV-WRO-01',
+    phone: '+91 22 2285 5412',
+    status: 'active',
+    passwordHash: 'AICTE@WRO2026',
+    registeredAt: '2026-01-15'
+  },
+  {
+    id: 'usr-5',
+    name: 'Prof. T. G. Sitharam',
+    email: 'advisor.ms@aicte-india.org',
+    role: 'senior_mgmt',
+    orgName: 'AICTE Council Secretariat',
+    aicteId: 'GOV-SEC-01',
+    phone: '+91 11 2958 1001',
+    status: 'active',
+    passwordHash: 'AICTE@Gov2026',
+    registeredAt: '2026-01-05'
+  },
+  {
+    id: 'usr-6',
+    name: 'Dr. S. K. Raman (Principal)',
+    email: 'principal@apexinstitute.edu.in',
+    role: 'college_inst',
+    orgName: 'Apex Institute of Technology & Management',
+    aicteId: '1-3324567891',
+    phone: '+91 98230 45678',
+    status: 'active',
+    passwordHash: 'Apex@Inst2026',
+    registeredAt: '2026-02-01'
+  },
+  {
+    id: 'usr-7',
+    name: 'Dr. R. C. Mathur (Registrar)',
+    email: 'registrar@state-tech-univ.ac.in',
+    role: 'university',
+    orgName: 'State Technical University',
+    aicteId: 'UNIV-MH-010',
+    phone: '+91 94220 12345',
+    status: 'active',
+    passwordHash: 'Univ@Tech2026',
+    registeredAt: '2026-02-10'
+  }
+];
 
 export const INITIAL_INSTITUTIONS: Institution[] = [
   {

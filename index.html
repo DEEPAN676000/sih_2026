@@ -122,10 +122,315 @@
 <body class="bg-gov-surface font-sans text-slate-800 antialiased min-h-screen flex flex-col">
 
   <!-- Full-Screen Official Authentication & Role Selection Gateway -->
-  <div id="loginScreen" class="fixed inset-0 z-50 bg-gradient-to-br from-gov-darkNavy via-gov-navy to-slate-900 flex items-center justify-center p-4">
-    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl border border-slate-700/50 overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <!-- ========================================== -->
+  <!-- 1. LANDING PAGE / WELCOME SCREEN (DEFAULT VIEW) -->
+  <!-- ========================================== -->
+  <div id="landingPageScreen" class="min-h-screen bg-gov-surface flex flex-col z-30 relative">
+    
+    <!-- Top Government Saffron/White/Green Accent Line -->
+    <div class="h-1 bg-gradient-to-r from-amber-500 via-white to-emerald-600"></div>
+
+    <!-- Top Government Identity Banner -->
+    <div class="bg-gov-darkNavy text-white border-b border-slate-800 text-xs px-4 sm:px-6 py-2 flex flex-wrap justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 font-semibold text-slate-300">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          Government of India &bull; Ministry of Education
+        </span>
+        <span class="hidden md:inline text-slate-600">|</span>
+        <span class="hidden md:inline text-slate-400">All India Council for Technical Education (AICTE)</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-300">
+        <span class="bg-gov-teal/20 text-gov-teal border border-gov-teal/30 px-2 py-0.5 rounded font-mono font-bold text-[11px]">
+          SIH 2026 EDITION
+        </span>
+        <div id="landingLiveClock" class="font-mono text-slate-300 text-[11px] hidden sm:block">--:--:-- IST</div>
+        <button onclick="toggleTheme()" class="hover:text-white transition-colors" title="Toggle high contrast">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Landing Navigation Header -->
+    <header class="bg-gov-navy text-white shadow-lg border-b border-gov-blue/50 sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+        
+        <!-- Council Emblem & Project Branding -->
+        <div class="flex items-center gap-3.5">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-gov-blue to-gov-teal flex items-center justify-center shadow-md border border-gov-teal/40 shrink-0">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-base sm:text-lg font-bold tracking-tight text-white">
+                ALL INDIA COUNCIL FOR TECHNICAL EDUCATION
+              </h1>
+              <span class="bg-gov-teal text-gov-darkNavy text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded">Govt of India</span>
+            </div>
+            <p class="text-xs text-slate-300 font-medium">Institution Complaint Monitoring System</p>
+          </div>
+        </div>
+
+        <!-- Right Action Buttons -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="showLoginModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-slate-800/80 hover:bg-slate-700 border border-slate-600 transition-all shadow-sm flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-gov-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+            <span>Log In</span>
+          </button>
+          
+          <button onclick="showRegisterModal()" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-gov-lightBlue hover:bg-blue-600 transition-all shadow-sm flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-cyan-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
+            <span class="hidden sm:inline">Register</span>
+            <span class="sm:hidden">Join</span>
+          </button>
+
+          <button onclick="showPublicComplaintModal()" class="px-4 py-2 rounded-xl text-xs font-black text-gov-darkNavy bg-gradient-to-r from-gov-teal to-cyan-300 hover:from-cyan-300 hover:to-gov-teal transition-all shadow-glow-teal flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-gov-darkNavy" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+            <span>Raise a Complaint</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-gov-darkNavy via-gov-navy to-slate-900 text-white py-16 px-4 sm:px-6 lg:px-8 border-b border-gov-blue/50 relative overflow-hidden">
+      <!-- Background subtle emblem watermark -->
+      <div class="absolute -right-16 -bottom-16 opacity-5 pointer-events-none">
+        <svg class="w-96 h-96 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 10h2v4h-2zm0 6h2v2h-2z"/></svg>
+      </div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        
+        <div class="inline-flex items-center gap-2 bg-gov-teal/15 border border-gov-teal/40 text-gov-teal px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
+          <span class="w-2 h-2 rounded-full bg-gov-teal animate-pulse"></span>
+          Centralized Regulatory & Grievance Intelligence Enclave
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-4xl leading-tight">
+          AICTE Institution Complaint Monitoring System
+        </h1>
+        
+        <p class="text-slate-300 text-sm sm:text-base max-w-3xl mt-4 leading-relaxed font-normal">
+          The centralized platform for AICTE officials, institutions, universities, faculty, and students that centralizes complaint submission, monitoring, coordination, and resolution across AICTE Bureaus and Cells. Eliminating inter-bureau silos with automated AI-assisted cross-bureau overlap detection between the Regulation Bureau (RB) and Public Grievance Redressal Cell (PGRC).
+        </p>
+
+        <!-- The 3 Primary User Actions (Requirement 1) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-10 max-w-5xl">
+          
+          <!-- Action 1: Log In -->
+          <div class="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-gov-teal/50 transition-all flex flex-col justify-between group shadow-xl">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-cyan-300 border border-blue-400/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              </div>
+              <div class="text-[10px] font-bold tracking-wider uppercase text-cyan-300">Action 1</div>
+              <h3 class="text-lg font-black text-white mt-1">Log In</h3>
+              <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                Role-based sign in for AICTE Bureaus (RB, PGRC), Regional Officers, Administrators, Senior Management, and registered Institutions / Universities.
+              </p>
+            </div>
+            <button onclick="showLoginModal()" class="mt-6 w-full py-2.5 px-4 rounded-xl bg-gov-teal text-gov-darkNavy font-black text-xs hover:bg-cyan-300 transition-colors flex items-center justify-center gap-2 shadow-md">
+              <span>Enter Portal Sign In</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </div>
+
+          <!-- Action 2: Register -->
+          <div class="bg-white/10 hover:bg-white/15 backdrop-blur-md rounded-2xl p-6 border border-white/10 hover:border-blue-400/50 transition-all flex flex-col justify-between group shadow-xl">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-400/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+              </div>
+              <div class="text-[10px] font-bold tracking-wider uppercase text-purple-300">Action 2</div>
+              <h3 class="text-lg font-black text-white mt-1">Register</h3>
+              <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                Register technical colleges, polytechnics, affiliated universities, or request administrative / regulatory bureau verification.
+              </p>
+            </div>
+            <button onclick="showRegisterModal()" class="mt-6 w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs transition-colors flex items-center justify-center gap-2 shadow-md">
+              <span>Create Account</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </div>
+
+          <!-- Action 3: Raise a Complaint -->
+          <div class="bg-gradient-to-br from-amber-500/20 to-gov-navy/80 hover:from-amber-500/30 backdrop-blur-md rounded-2xl p-6 border border-amber-400/40 hover:border-amber-400 transition-all flex flex-col justify-between group shadow-xl">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-400/30 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              </div>
+              <div class="text-[10px] font-bold tracking-wider uppercase text-amber-300">Action 3</div>
+              <h3 class="text-lg font-black text-white mt-1">Raise a Complaint</h3>
+              <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                Submit petitions regarding faculty 7th CPC violations, certificate withholding, capitation fee demands, or infrastructure deficiencies.
+              </p>
+            </div>
+            <button onclick="showPublicComplaintModal()" class="mt-6 w-full py-2.5 px-4 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs transition-colors flex items-center justify-center gap-2 shadow-glow-amber">
+              <span>Lodge Grievance Now</span>
+              <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Instant Evaluator Role Bar for SIH Judges -->
+        <div class="mt-10 p-4 rounded-2xl bg-slate-800/80 border border-slate-700/80 backdrop-blur-md max-w-5xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5">
+            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5 uppercase tracking-wider">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              ⚡ Instant SIH 2026 Judge Demo Evaluation Bar (1-Click Test Any of 7 Roles)
+            </span>
+            <span class="text-[10px] text-slate-400">Pre-authenticated for evaluator inspection</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-[11px]">
+            <button onclick="instantLoginRole('rb_officer')" class="p-2 rounded-lg bg-blue-900/60 hover:bg-blue-800 border border-blue-500/40 text-left transition-all">
+              <div class="font-bold text-blue-200">1. RB Officer</div>
+              <div class="text-[9px] text-slate-300 truncate">Dr. Arvind Joshi</div>
+            </button>
+            <button onclick="instantLoginRole('pgrc_officer')" class="p-2 rounded-lg bg-purple-900/60 hover:bg-purple-800 border border-purple-500/40 text-left transition-all">
+              <div class="font-bold text-purple-200">2. PGRC Officer</div>
+              <div class="text-[9px] text-slate-300 truncate">Smt. Sunita Sharma</div>
+            </button>
+            <button onclick="instantLoginRole('admin')" class="p-2 rounded-lg bg-slate-700/80 hover:bg-slate-700 border border-slate-500/40 text-left transition-all">
+              <div class="font-bold text-white">3. Admin</div>
+              <div class="text-[9px] text-slate-300 truncate">Full Access & Users</div>
+            </button>
+            <button onclick="instantLoginRole('ro_officer')" class="p-2 rounded-lg bg-emerald-900/60 hover:bg-emerald-800 border border-emerald-500/40 text-left transition-all">
+              <div class="font-bold text-emerald-200">4. Regional (WRO)</div>
+              <div class="text-[9px] text-slate-300 truncate">Shri D. V. Kulkarni</div>
+            </button>
+            <button onclick="instantLoginRole('senior_mgmt')" class="p-2 rounded-lg bg-amber-900/60 hover:bg-amber-800 border border-amber-500/40 text-left transition-all">
+              <div class="font-bold text-amber-200">5. Senior Mgmt</div>
+              <div class="text-[9px] text-slate-300 truncate">Prof. T. G. Sitharam</div>
+            </button>
+            <button onclick="instantLoginRole('college_inst')" class="p-2 rounded-lg bg-cyan-900/60 hover:bg-cyan-800 border border-cyan-500/40 text-left transition-all">
+              <div class="font-bold text-cyan-200">6. College / Inst</div>
+              <div class="text-[9px] text-slate-300 truncate">Apex Institute (Principal)</div>
+            </button>
+            <button onclick="instantLoginRole('university')" class="p-2 rounded-lg bg-indigo-900/60 hover:bg-indigo-800 border border-indigo-500/40 text-left transition-all">
+              <div class="font-bold text-indigo-200">7. University</div>
+              <div class="text-[9px] text-slate-300 truncate">State Tech University</div>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Quick Public Complaint Tracking & Feature Highlights -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
       
-      <!-- Left Hero Panel with AICTE Identity -->
+      <!-- Public Tracking Search Bar -->
+      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-card -mt-10 relative z-20 mb-12">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+          <div>
+            <span class="text-[10px] font-black uppercase tracking-wider text-gov-lightBlue bg-blue-50 px-2 py-0.5 rounded">
+              Public Tracking Desk
+            </span>
+            <h2 class="text-xl font-black text-gov-navy mt-1">Track Complaint Status Online</h2>
+            <p class="text-xs text-slate-500">Check chronological progress, assigned bureau, and disposal timeline without signing in</p>
+          </div>
+          <div class="text-xs text-slate-500 flex items-center gap-2">
+            <span>Demo sample:</span>
+            <button type="button" onclick="document.getElementById('publicTrackId').value='AICTE/RB/2026/0104'; trackComplaintPublic();" class="text-gov-lightBlue font-bold hover:underline font-mono bg-slate-100 px-2 py-1 rounded">
+              AICTE/RB/2026/0104
+            </button>
+          </div>
+        </div>
+
+        <form onsubmit="handlePublicTrackSubmit(event)" class="flex flex-col sm:flex-row gap-3">
+          <div class="relative flex-1">
+            <input type="text" id="publicTrackId" placeholder="Enter AICTE Case ID (e.g. AICTE/RB/2026/0104 or AICTE/PGRC/2026/0218)..." required class="w-full text-xs font-mono uppercase bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-slate-800 focus:outline-none focus:border-gov-teal">
+            <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </div>
+          <button type="submit" class="bg-gov-navy hover:bg-gov-darkNavy text-white font-bold px-6 py-3 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md shrink-0">
+            <span>Search Case Status</span>
+            <svg class="w-4 h-4 text-gov-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- 4 Core Pillars of the Platform -->
+      <div class="text-center max-w-3xl mx-auto mb-8">
+        <h3 class="text-2xl font-black text-gov-navy tracking-tight">Enterprise Governance Across 7 Stakeholder Roles</h3>
+        <p class="text-xs text-slate-500 mt-2">Designed specifically for technical education regulators, institutions, and aggrieved stakeholders with strict role confidentiality.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-card transition-all">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <h4 class="font-extrabold text-slate-900 text-sm">AI Overlap Detection</h4>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Multi-factor algorithms spot concurrent proceedings between Regulation Bureau (RB) and PGRC before duplicate hearing notices are issued.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-card transition-all">
+          <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+          </div>
+          <h4 class="font-extrabold text-slate-900 text-sm">7-Role Governance</h4>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Colleges, Universities, RB, PGRC, Regional Officers, Admin, and Senior Management each receive dedicated permissions and data boundaries.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-card transition-all">
+          <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <h4 class="font-extrabold text-slate-900 text-sm">Immutable Audit Trail</h4>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Every inspection directive, notice, show-cause explanation, and hearing minute is immutably timestamped with assigned officer attribution.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-card transition-all">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          </div>
+          <h4 class="font-extrabold text-slate-900 text-sm">Real-Time Intelligence</h4>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Council-level disposal rate metrics, regional jurisdiction spread, overdue SLA escalation alerts, and automated official report downloads.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Official Footer -->
+    <footer class="mt-auto bg-gov-darkNavy text-slate-400 text-xs border-t border-slate-800 py-8 px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+        <div>
+          <div class="font-bold text-slate-200">All India Council for Technical Education (AICTE)</div>
+          <div class="text-[11px] text-slate-400 mt-0.5">Nelson Mandela Marg, Vasant Kunj, New Delhi - 110070 &bull; Central Grievance Redressal Desk</div>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 text-[11px]">
+          <span class="text-slate-300">Toll-Free Helpline: 1800-11-2323</span>
+          <span class="text-slate-600">|</span>
+          <span class="text-slate-300">Support: grievance-support@aicte-india.org</span>
+          <span class="text-slate-600">|</span>
+          <span class="font-mono text-emerald-400 font-bold">NIC GovCloud Shield v4.8</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. LOGIN MODAL -->
+  <!-- ========================================== -->
+  <div id="loginModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-4xl w-full bg-white rounded-3xl shadow-2xl border border-slate-700/50 overflow-hidden grid grid-cols-1 md:grid-cols-2 my-auto">
+      
+      <!-- Left Panel -->
       <div class="bg-gradient-to-br from-gov-navy to-gov-blue text-white p-8 flex flex-col justify-between relative overflow-hidden">
         <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
           <svg class="w-72 h-72 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 10h2v4h-2zm0 6h2v2h-2z"/></svg>
@@ -146,25 +451,21 @@
           </div>
 
           <h2 class="text-xl font-black text-white tracking-tight leading-snug">
-            All India Council for Technical Education
+            Official Portal Sign In
           </h2>
           <p class="text-xs text-slate-300 mt-2 leading-relaxed">
-            Integrated Institution Complaint Monitoring & Cross-Bureau Overlap Tracking Dashboard (RB, PGRC, Approval & Regional Bureaus).
+            Enter your authorized email and password to access your role-based workspace.
           </p>
         </div>
 
-        <div class="space-y-3 pt-6 border-t border-slate-700/60 text-xs">
-          <div class="flex items-center gap-2 text-slate-200">
+        <div class="space-y-2 pt-6 border-t border-slate-700/60 text-xs text-slate-300">
+          <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-gov-teal shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            <span>AI-Assisted Cross-Bureau Overlap Detection</span>
+            <span>Role-Based Access Governance</span>
           </div>
-          <div class="flex items-center gap-2 text-slate-200">
+          <div class="flex items-center gap-2">
             <svg class="w-4 h-4 text-gov-teal shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            <span>Role-Based Secure Regulatory Access</span>
-          </div>
-          <div class="flex items-center gap-2 text-slate-200">
-            <svg class="w-4 h-4 text-gov-teal shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            <span>Immutable Chronological Compliance Audit Trail</span>
+            <span>SHA-256 Cryptographic Credential Hash</span>
           </div>
         </div>
 
@@ -173,62 +474,58 @@
         </div>
       </div>
 
-      <!-- Right Login Form Panel -->
+      <!-- Right Form Panel -->
       <div class="p-8 flex flex-col justify-between text-slate-800">
         <div>
           <div class="flex items-center justify-between mb-2">
-            <h3 class="text-lg font-black text-gov-navy tracking-tight">Official Sign In</h3>
-            <span class="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">
-              Demo Environment
-            </span>
+            <h3 class="text-lg font-black text-gov-navy tracking-tight">Portal Authentication</h3>
+            <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">&times;</button>
           </div>
-          <p class="text-xs text-slate-500 mb-4">
-            Select a pre-configured role below or enter credentials to inspect the dashboard.
+          <p class="text-xs text-slate-500 mb-3">
+            Enter credentials below or select an instant evaluation role.
           </p>
 
-          <!-- Quick Role Selector for SIH Judges -->
-          <div class="mb-4 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-            <label class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
-              ⚡ Instant SIH 2026 Judge Role Select
+          <!-- Quick Evaluator Fill Selector -->
+          <div class="mb-3 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <label class="block text-[9px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">
+              ⚡ Evaluator Quick Role Fill
             </label>
-            <div class="grid grid-cols-2 gap-1.5 text-xs">
-              <button type="button" onclick="selectDemoRole('rb_officer')" class="text-left p-1.5 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
-                <div class="font-bold text-blue-900 text-[11px]">Regulation Bureau (RB)</div>
-                <div class="text-[9px] text-slate-400">Dr. Arvind Joshi (Director)</div>
+            <div class="grid grid-cols-2 gap-1 text-[11px]">
+              <button type="button" onclick="selectDemoRole('rb_officer')" class="text-left p-1 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
+                <div class="font-bold text-blue-900 text-[10px]">Regulation Bureau</div>
               </button>
-              <button type="button" onclick="selectDemoRole('pgrc_officer')" class="text-left p-1.5 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
-                <div class="font-bold text-purple-900 text-[11px]">PGRC Officer</div>
-                <div class="text-[9px] text-slate-400">Smt. Sunita Sharma (Dy Dir)</div>
+              <button type="button" onclick="selectDemoRole('pgrc_officer')" class="text-left p-1 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
+                <div class="font-bold text-purple-900 text-[10px]">PGRC Officer</div>
               </button>
-              <button type="button" onclick="selectDemoRole('admin')" class="text-left p-1.5 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
-                <div class="font-bold text-slate-900 text-[11px]">Administrator</div>
-                <div class="text-[9px] text-slate-400">System Admin (Full Access)</div>
+              <button type="button" onclick="selectDemoRole('admin')" class="text-left p-1 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
+                <div class="font-bold text-slate-900 text-[10px]">Administrator</div>
               </button>
-              <button type="button" onclick="selectDemoRole('ro_officer')" class="text-left p-1.5 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
-                <div class="font-bold text-emerald-900 text-[11px]">Regional Officer</div>
-                <div class="text-[9px] text-slate-400">Western Region (Mumbai)</div>
-              </button>
-              <button type="button" onclick="selectDemoRole('senior_mgmt')" class="col-span-2 text-left p-1.5 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
-                <div class="font-bold text-amber-900 text-[11px]">Senior Management</div>
-                <div class="text-[9px] text-slate-400">Advisor / Member Secretary (Council Overviews)</div>
+              <button type="button" onclick="selectDemoRole('college_inst')" class="text-left p-1 rounded-lg border border-slate-200 hover:border-gov-teal hover:bg-white transition-all">
+                <div class="font-bold text-cyan-900 text-[10px]">College / Inst</div>
               </button>
             </div>
+          </div>
+
+          <!-- Error Alert Banner -->
+          <div id="loginErrorAlert" class="hidden mb-3 bg-rose-50 border border-rose-300 text-rose-800 p-2.5 rounded-xl text-xs flex items-start gap-2">
+            <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span id="loginErrorText">Invalid credentials.</span>
           </div>
 
           <!-- Login Form -->
           <form onsubmit="handleLoginSubmit(event)" class="space-y-3">
             <div>
-              <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Official Email / AICTE Employee ID</label>
+              <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Official Email / AICTE ID *</label>
               <div class="relative">
-                <input type="text" id="loginUsername" required value="arvind.joshi@aicte-india.org" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-slate-800 focus:outline-none focus:border-gov-teal">
+                <input type="email" id="loginUsername" required value="arvind.joshi@aicte-india.org" placeholder="e.g. officer@aicte-india.org or principal@college.edu" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-2 text-slate-800 focus:outline-none focus:border-gov-teal">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
               </div>
             </div>
 
             <div>
-              <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Password</label>
+              <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Password *</label>
               <div class="relative">
-                <input type="password" id="loginPassword" required value="AICTE@Gov2026" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-slate-800 focus:outline-none focus:border-gov-teal">
+                <input type="password" id="loginPassword" required value="AICTE@RB2026" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-10 py-2 text-slate-800 focus:outline-none focus:border-gov-teal">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                 <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2 text-slate-400 hover:text-slate-600">
                   <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -238,10 +535,10 @@
 
             <div class="flex items-center justify-between text-[11px]">
               <label class="flex items-center gap-1.5 cursor-pointer text-slate-600">
-                <input type="checkbox" checked class="rounded border-slate-300 text-gov-teal focus:ring-gov-teal">
+                <input type="checkbox" id="loginRememberMe" checked class="rounded border-slate-300 text-gov-teal focus:ring-gov-teal">
                 <span>Remember session</span>
               </label>
-              <a href="javascript:void(0)" onclick="showToast('Password recovery token sent to official AICTE mail.', 'info')" class="text-gov-lightBlue hover:underline font-semibold">Forgot PIN?</a>
+              <a href="javascript:void(0)" onclick="showToast('Password recovery link dispatched to registered official mail.', 'info')" class="text-gov-lightBlue hover:underline font-semibold">Forgot Password?</a>
             </div>
 
             <button type="submit" class="w-full bg-gov-navy hover:bg-gov-darkNavy text-white font-bold py-2.5 rounded-xl shadow-md transition-all text-xs flex items-center justify-center gap-2 mt-2">
@@ -249,10 +546,21 @@
               <svg class="w-4 h-4 text-gov-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </button>
           </form>
+
+          <!-- Links to Register and Landing Page -->
+          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+            <button type="button" onclick="switchToRegisterModal()" class="text-gov-lightBlue hover:underline font-semibold flex items-center gap-1">
+              <span>New institution? Register here</span>
+            </button>
+            <button type="button" onclick="closeLoginModal(); showLandingPage();" class="text-slate-500 hover:text-slate-700">
+              &larr; Return to Home
+            </button>
+          </div>
+
         </div>
 
-        <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 flex items-center justify-between">
-          <span>AICTE Security Advisory: Authorized personnel only.</span>
+        <div class="pt-3 border-t border-slate-100 text-[10px] text-slate-400 flex items-center justify-between mt-3">
+          <span>AICTE Security Enclave</span>
           <span class="font-mono text-emerald-600 font-bold">256-Bit TLS</span>
         </div>
       </div>
@@ -260,8 +568,388 @@
     </div>
   </div>
 
-  <!-- Top Government Header Banner -->
-  <header class="bg-gov-darkNavy text-white border-b border-slate-800 text-xs px-4 py-1.5 flex flex-wrap justify-between items-center z-50">
+  <!-- ========================================== -->
+  <!-- 3. REGISTRATION MODAL (7 ROLES) -->
+  <!-- ========================================== -->
+  <div id="registerModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-2xl w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden my-auto flex flex-col max-h-[92vh]">
+      
+      <!-- Modal Header -->
+      <div class="bg-gov-navy text-white px-6 py-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-gov-teal text-gov-darkNavy flex items-center justify-center font-bold text-sm">
+            +
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold tracking-tight">AICTE Portal Account Registration</h3>
+            <p class="text-xs text-slate-300">Role-based institutional & officer registration</p>
+          </div>
+        </div>
+        <button onclick="closeRegisterModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <!-- Registration Form Body -->
+      <form id="registrationForm" onsubmit="handleRegisterSubmit(event)" class="p-6 overflow-y-auto flex-1 space-y-4 text-xs text-slate-700">
+        
+        <!-- Error Alert -->
+        <div id="regErrorAlert" class="hidden bg-rose-50 border border-rose-300 text-rose-800 p-3 rounded-xl flex items-start gap-2">
+          <svg class="w-4 h-4 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span id="regErrorText">Please fill in all required fields.</span>
+        </div>
+
+        <!-- Role Selection (Requirement 2: Seven Roles) -->
+        <div>
+          <label class="block font-bold text-slate-700 uppercase mb-1">Select User Role *</label>
+          <select id="regRole" required onchange="handleRoleFieldChange(this.value)" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-gov-teal">
+            <option value="college_inst">1. College / Institution (Technical College / Polytechnic)</option>
+            <option value="university">2. University (Affiliating / Technical University)</option>
+            <option value="rb_officer">3. Regulation Bureau (RB) Official</option>
+            <option value="pgrc_officer">4. Public Grievance Redressal Cell (PGRC) Official</option>
+            <option value="ro_officer">5. Regional Officer (RO - WRO/NRO/SRO/NWRO)</option>
+            <option value="senior_mgmt">6. Senior Management (Advisor / Member Secretary)</option>
+            <option value="admin">7. System Administrator</option>
+          </select>
+        </div>
+
+        <!-- Administrative Security Notice (Requirement 2 & 4) -->
+        <div id="adminRoleSecurityNotice" class="hidden bg-amber-50 border border-amber-300 rounded-xl p-3 text-amber-900 text-[11px] leading-relaxed flex items-start gap-2">
+          <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          <div>
+            <strong>Administrative Privilege Governance Rule:</strong> Administrative and regulatory roles (Admin, Senior Management, Bureau Officers) do not receive privileged access simply by selecting their role during registration. Your account will be marked as <em>Pending Administrator Verification</em> until authorized by an AICTE Administrator.
+          </div>
+        </div>
+
+        <!-- Dynamic Role-Specific Fields Container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <div id="regOrgContainer">
+            <label class="block font-bold text-slate-700 mb-1" id="regOrgLabel">Organization / Institution Name *</label>
+            <input type="text" id="regOrgName" required placeholder="e.g. Apex Institute of Technology & Management" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+          <div id="regAicteIdContainer">
+            <label class="block font-bold text-slate-700 mb-1" id="regAicteIdLabel">AICTE Permanent ID *</label>
+            <input type="text" id="regAicteId" placeholder="e.g. 1-3324567891 (for institutions)" class="w-full text-xs font-mono bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+        </div>
+
+        <!-- Common Personal / Official Details -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Full Name *</label>
+            <input type="text" id="regName" required placeholder="Authorized representative / officer name" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Official Email Address *</label>
+            <input type="email" id="regEmail" required placeholder="e.g. principal@institution.edu.in" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Contact Mobile Number *</label>
+            <input type="tel" id="regPhone" required placeholder="+91 98765 43210" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">State / AICTE Region</label>
+            <select id="regRegion" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+              <option value="Western Region (WRO - Mumbai)">Western Region (WRO - Maharashtra, Goa)</option>
+              <option value="Northern Region (NRO - Kanpur)">Northern Region (NRO - UP, Uttarakhand)</option>
+              <option value="Southern Region (SRO - Chennai)">Southern Region (SRO - Tamil Nadu)</option>
+              <option value="South-Western Region (SWRO - Bengaluru)">South-Western Region (SWRO - Karnataka, Kerala)</option>
+              <option value="North-West Region (NWRO - Chandigarh)">North-West Region (NWRO - Delhi, Punjab, Haryana)</option>
+              <option value="Eastern Region (ERO - Kolkata)">Eastern Region (ERO - West Bengal, Bihar)</option>
+              <option value="Central Region (CRO - Bhopal)">Central Region (CRO - MP, Gujarat)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Password and Confirm Password -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Create Password * (min 8 chars)</label>
+            <input type="password" id="regPassword" required minlength="8" placeholder="••••••••" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Confirm Password *</label>
+            <input type="password" id="regConfirmPassword" required minlength="8" placeholder="••••••••" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+
+        </div>
+
+        <div class="flex items-start gap-2 pt-1 text-[11px] text-slate-600">
+          <input type="checkbox" id="regConsent" required class="rounded border-slate-300 text-gov-teal focus:ring-gov-teal mt-0.5">
+          <label for="regConsent">
+            I certify that the information provided represents an authorized institutional representative or regulatory personnel under AICTE Act guidelines.
+          </label>
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+          <button type="button" onclick="switchToLoginModal()" class="text-xs text-gov-lightBlue hover:underline font-semibold">
+            Already have an account? Sign in
+          </button>
+          
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeRegisterModal()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 font-bold hover:bg-slate-100 transition-colors">
+              Cancel
+            </button>
+            <button type="submit" class="bg-gov-teal hover:bg-gov-darkTeal text-gov-darkNavy font-black px-6 py-2 rounded-xl shadow-md transition-all">
+              Complete Registration
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 4. PUBLIC COMPLAINT SUBMISSION MODAL (LANDING PAGE ACTION 3) -->
+  <!-- ========================================== -->
+  <div id="publicComplaintModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-2xl w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden my-auto flex flex-col max-h-[92vh]">
+      
+      <!-- Header -->
+      <div class="bg-gov-navy text-white px-6 py-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold text-sm">
+            !
+          </div>
+          <div>
+            <h3 class="text-base font-extrabold tracking-tight">Raise a Complaint / Grievance Petition</h3>
+            <p class="text-xs text-slate-300">Direct submission to AICTE Regulation Bureau & PGRC</p>
+          </div>
+        </div>
+        <button onclick="closePublicComplaintModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+
+      <!-- Form Body -->
+      <form id="publicComplaintForm" onsubmit="handlePublicComplaintSubmit(event)" class="p-6 overflow-y-auto flex-1 space-y-4 text-xs text-slate-700">
+        
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-blue-900 text-[11px] leading-relaxed flex items-start gap-2">
+          <svg class="w-4 h-4 text-gov-lightBlue shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div>
+            <strong>Grievance Intake Notice:</strong> Eligible stakeholders (faculty members, students, parents, whistleblowers, and institutions) can submit complaints. The system generates an official AICTE tracking number and scans for concurrent inter-bureau proceedings.
+          </div>
+        </div>
+
+        <!-- Complainant Identity -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Complainant Full Name *</label>
+            <input type="text" id="pubCompName" required placeholder="Your full name" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Official Email Address *</label>
+            <input type="email" id="pubCompEmail" required placeholder="contact@domain.com" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Complainant Type *</label>
+            <select id="pubCompType" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+              <option value="Faculty Member">Faculty Member</option>
+              <option value="Student / Parent">Student / Parent</option>
+              <option value="Whistleblower">Whistleblower / Staff</option>
+              <option value="Institution Representative">Institution / College Rep</option>
+              <option value="Anonymous">Anonymous / Confidential</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Target Institution and AICTE ID -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Target Technical Institution *</label>
+            <select id="pubInstSelect" required onchange="populatePublicInstData(this.value)" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+              <option value="">-- Select Target Approved Institution --</option>
+              <option value="1-3324567891">Apex Institute of Technology & Management (Pune)</option>
+              <option value="1-4829103942">National Polytechnic & Science Academy (Ghaziabad)</option>
+              <option value="1-5582910483">Imperial College of Engineering & Research (Bengaluru)</option>
+              <option value="1-7729104851">Vanguard School of Business & Management (Noida)</option>
+              <option value="1-9923847162">Saraswati College of Pharmacy & Health (Coimbatore)</option>
+              <option value="OTHER">Other Institution (Enter Details Below)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">AICTE Permanent ID *</label>
+            <input type="text" id="pubAicteId" required placeholder="e.g. 1-3324567891" class="w-full text-xs font-mono bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-slate-700 focus:outline-none focus:border-gov-teal">
+          </div>
+        </div>
+
+        <div id="pubCustomInstContainer" class="hidden">
+          <label class="block font-bold text-slate-700 mb-1">Institution Name (If not in list above)</label>
+          <input type="text" id="pubCustomInstName" placeholder="Full legal name of the institute..." class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+        </div>
+
+        <!-- Category and Bureau -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Complaint Category *</label>
+            <select id="pubCategory" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+              <option value="Faculty Qualifications & Pay Scale Violation">Faculty Qualifications & Pay Scale Violation (7th CPC)</option>
+              <option value="Withholding of Original Certificates">Illegal Withholding of Original Certificates / Degrees</option>
+              <option value="Capitation Fee & Excess Tuition Fee">Capitation Fee & Excess Tuition Fee Demand</option>
+              <option value="Unapproved Course Intake">Unapproved Student Intake / Extra Divisions</option>
+              <option value="Denial of Refund on Admission Cancellation">Denial of Fee Refund on Admission Cancellation</option>
+              <option value="Lack of Mandatory Laboratory Infrastructure">Lack of Mandatory Laboratory & Library Infrastructure</option>
+              <option value="Student Harassment / Anti-Ragging Violation">Student Harassment / Anti-Ragging Non-Compliance</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Relevant AICTE Bureau / Cell *</label>
+            <select id="pubBureau" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+              <option value="Regulation Bureau (RB)">Regulation Bureau (RB) - Norms Violation</option>
+              <option value="Public Grievance Redressal Cell (PGRC)">Public Grievance Redressal Cell (PGRC) - Individual Grievance</option>
+              <option value="Approval Bureau (AB)">Approval Bureau (AB) - EOA Deficiencies</option>
+              <option value="Policy & Academic Planning Bureau (PAPB)">Policy Bureau (PAPB)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Subject -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Complaint Subject / Summary *</label>
+          <input type="text" id="pubTitle" required placeholder="e.g. Non-payment of 7th CPC salary arrears and unlawful certificate retention..." class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal">
+        </div>
+
+        <!-- Detailed Narrative -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Detailed Grievance Description *</label>
+          <textarea id="pubDescription" rows="4" required placeholder="Specify dates, names of affected individuals, specific AICTE norms breached, and chronological events..." class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-gov-teal"></textarea>
+          <div class="text-[10px] text-slate-400 mt-1">
+            * The AI overlap engine will compare this text in real-time across bureau logs to detect concurrent proceedings.
+          </div>
+        </div>
+
+        <!-- Document Upload Simulation -->
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Supporting Document Upload (PDF, JPG, PNG)</label>
+          <div class="border-2 border-dashed border-slate-300 rounded-xl p-4 text-center hover:border-gov-teal bg-slate-50 cursor-pointer" onclick="document.getElementById('pubDocUpload').click()">
+            <svg class="w-6 h-6 text-slate-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            <span class="text-xs font-semibold text-slate-600 block" id="pubDocLabel">Click to select affidavit or proof documents</span>
+            <span class="text-[10px] text-slate-400">PDF, DOCX, JPG up to 15MB</span>
+            <input type="file" id="pubDocUpload" class="hidden" onchange="handleDocSelected(this)">
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-200 flex items-center justify-between">
+          <button type="button" onclick="closePublicComplaintModal()" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-600 font-bold hover:bg-slate-100 transition-colors">
+            Cancel
+          </button>
+          <button type="submit" class="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-6 py-2 rounded-xl shadow-glow-amber transition-all">
+            Submit Grievance &amp; Generate Case ID
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. PUBLIC COMPLAINT TRACKING STATUS MODAL -->
+  <!-- ========================================== -->
+  <div id="trackComplaintModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-2xl w-full bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden my-auto flex flex-col">
+      <div class="bg-gov-navy text-white px-6 py-4 flex items-center justify-between">
+        <div>
+          <span class="text-[10px] font-bold text-gov-teal uppercase tracking-wider">Live Status Lookup</span>
+          <h3 class="text-base font-extrabold tracking-tight" id="trackModalCaseId">AICTE/RB/2026/0104</h3>
+        </div>
+        <button onclick="closeTrackModal()" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+      </div>
+      
+      <div class="p-6 space-y-4 text-xs text-slate-700" id="trackModalBody">
+        <!-- Dynamically rendered -->
+      </div>
+      
+      <div class="bg-slate-50 px-6 py-3 border-t border-slate-100 flex items-center justify-between">
+        <span class="text-[10px] text-slate-500 font-mono">Status verified by AICTE Central National Grievance Grid</span>
+        <button onclick="closeTrackModal()" class="px-4 py-1.5 bg-gov-navy text-white font-bold rounded-lg text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 6. REGISTRATION SUCCESS CONFIRMATION MODAL -->
+  <!-- ========================================== -->
+  <div id="regSuccessModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 text-center space-y-4 my-auto">
+      <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-2xl font-black">
+        &check;
+      </div>
+      <h3 class="text-lg font-black text-gov-navy" id="regSuccessTitle">Registration Successful</h3>
+      <p class="text-xs text-slate-600 leading-relaxed" id="regSuccessMessage">
+        Your account has been registered in the AICTE Institution Complaint Monitoring System.
+      </p>
+      <div class="pt-2 flex flex-col sm:flex-row gap-2 justify-center">
+        <button onclick="closeRegSuccessModal(); showLoginModal();" class="px-5 py-2.5 bg-gov-navy hover:bg-gov-darkNavy text-white font-bold rounded-xl text-xs transition-colors">
+          Proceed to Sign In
+        </button>
+        <button onclick="closeRegSuccessModal(); showLandingPage();" class="px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-50">
+          Return to Home
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 7. COMPLAINT CONFIRMATION MODAL -->
+  <!-- ========================================== -->
+  <div id="complaintConfirmationModal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="max-w-lg w-full bg-white rounded-3xl shadow-2xl border border-slate-200 p-6 text-center space-y-4 my-auto">
+      <div class="w-14 h-14 rounded-full bg-gov-teal/20 text-gov-teal flex items-center justify-center mx-auto text-2xl font-black">
+        &check;
+      </div>
+      <span class="text-[10px] font-black uppercase tracking-wider text-gov-teal bg-gov-teal/10 px-2 py-0.5 rounded">
+        Complaint Registered Successfully
+      </span>
+      <h3 class="text-lg font-black text-gov-navy">AICTE Case Reference Issued</h3>
+      
+      <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-left space-y-2">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <span class="text-xs text-slate-500">Official Case ID:</span>
+          <span class="text-sm font-black font-mono text-gov-lightBlue" id="confCaseId">AICTE/RB/2026/0126</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500">Target Institution:</span>
+          <span class="font-bold text-slate-800" id="confInstName">--</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500">Assigned Bureau:</span>
+          <span class="font-bold text-blue-900" id="confBureau">Regulation Bureau</span>
+        </div>
+        <div class="flex items-center justify-between text-xs">
+          <span class="text-slate-500">Resolution SLA Forecast:</span>
+          <span class="font-bold text-emerald-600" id="confSla">30 Days (Due: 28 Nov 2026)</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-500 leading-relaxed">
+        Save this Case ID for status inquiries. You can track this case anytime using the Public Tracking Desk on the home page.
+      </p>
+
+      <div class="pt-2 flex flex-col sm:flex-row gap-2 justify-center">
+        <button onclick="closeComplaintConfModal(); trackComplaintPublic(lastSubmittedCaseId);" class="px-5 py-2.5 bg-gov-navy hover:bg-gov-darkNavy text-white font-bold rounded-xl text-xs transition-colors">
+          Track This Case Now
+        </button>
+        <button onclick="closeComplaintConfModal(); showLandingPage();" class="px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-50">
+          Back to Home
+        </button>
+      </div>
+    </div>
+  </div>
+<!-- Top Government Header Banner -->
+  <header id="portalHeader" class="hidden bg-gov-darkNavy text-white border-b border-slate-800 text-xs px-4 py-1.5 flex flex-wrap justify-between items-center z-50">
     <div class="flex items-center gap-3">
       <span class="inline-flex items-center gap-1.5 font-semibold text-slate-300">
         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
@@ -284,7 +972,7 @@
   </header>
 
   <!-- Main Navigation Bar -->
-  <nav class="bg-gov-navy text-white sticky top-0 z-40 shadow-lg border-b border-gov-blue/50">
+  <nav id="portalNav" class="hidden bg-gov-navy text-white sticky top-0 z-40 shadow-lg border-b border-gov-blue/50">
     <div class="max-w-[1720px] mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
       
       <!-- Brand & Title -->
@@ -341,6 +1029,10 @@
         </div>
 
         <!-- User Role Profile Pill -->
+        <button onclick="showLandingPage()" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gov-blue/60 hover:bg-gov-blue text-slate-200 hover:text-white text-xs font-semibold border border-slate-700 transition-colors" title="Return to Welcome Landing Page">
+          <svg class="w-3.5 h-3.5 text-gov-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          <span>Welcome Page</span>
+        </button>
         <div id="userProfileSection" class="flex items-center gap-3 border-l border-slate-700 pl-3">
           <div class="flex items-center gap-2.5">
             <div class="w-8 h-8 rounded-full bg-gov-teal/20 border border-gov-teal text-gov-teal flex items-center justify-center font-bold text-xs" id="userAvatar">
@@ -363,7 +1055,7 @@
   </nav>
 
   <!-- Primary App Layout Container -->
-  <div id="appContainer" class="flex-1 flex overflow-hidden">
+  <div id="appContainer" class="hidden flex-1 flex overflow-hidden">
 
     <!-- Collapsible Sidebar Navigation -->
     <aside id="sidebar" class="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0 transition-all duration-300 z-30">
@@ -408,6 +1100,8 @@
             <option value="admin">System Administrator</option>
             <option value="ro_officer">Regional Officer (WRO / Mumbai)</option>
             <option value="senior_mgmt">Senior Management (Advisor/MS)</option>
+            <option value="college_inst">College / Institution</option>
+            <option value="university">University</option>
           </select>
 
           <!-- Attractive Slide-Down Floating Menu -->
@@ -493,6 +1187,38 @@
               </span>
             </button>
 
+            <!-- Option 6: College / Institution -->
+            <button type="button" onclick="selectRoleOption('college_inst')" class="role-opt-btn w-full text-left p-2 pt-2.5 rounded-xl flex items-center justify-between hover:bg-cyan-50/80 transition-all group" data-role="college_inst">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-800 border border-cyan-200 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                  CI
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-cyan-900 leading-tight">College / Institution</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-cyan-700 leading-tight mt-0.5">Apex Institute &bull; Principal</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0 hidden" data-check="college_inst">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
+            <!-- Option 7: University -->
+            <button type="button" onclick="selectRoleOption('university')" class="role-opt-btn w-full text-left p-2 pt-2.5 rounded-xl flex items-center justify-between hover:bg-indigo-50/80 transition-all group" data-role="university">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-800 border border-indigo-200 flex items-center justify-center font-bold text-xs shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  UN
+                </div>
+                <div class="min-w-0">
+                  <div class="font-bold text-slate-800 text-xs group-hover:text-indigo-900 leading-tight">University Authority</div>
+                  <div class="text-[10px] text-slate-400 group-hover:text-indigo-700 leading-tight mt-0.5">State Tech University &bull; Registrar</div>
+                </div>
+              </div>
+              <span class="role-check-icon text-gov-teal ml-1 shrink-0 hidden" data-check="university">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </span>
+            </button>
+
           </div>
         </div>
       </div>
@@ -531,6 +1257,14 @@
         <button onclick="switchTab('reports')" id="nav-reports" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors">
           <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
           <span>Analytics & Reports</span>
+        </button>
+
+        <button onclick="switchTab('users')" id="nav-users" class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors hidden">
+          <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            <span>User & Access Control</span>
+          </div>
+          <span id="sidebarPendingUsersCount" class="text-xs bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full font-bold">0 Pending</span>
         </button>
       </div>
 
@@ -1163,6 +1897,135 @@
             </div>
           </div>
 
+        </div>
+
+      </section>
+
+      <!-- TAB 6: ADMIN USER & ACCESS CONTROL -->
+      <section id="tab-content-users" class="hidden space-y-6">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="bg-indigo-100 text-indigo-800 text-[10px] font-black uppercase px-2 py-0.5 rounded">
+                Admin Exclusive Enclave
+              </span>
+              <span class="text-xs text-slate-400 font-mono">AICTE Security Protocol 2026</span>
+            </div>
+            <h2 class="text-xl font-black text-gov-navy tracking-tight mt-1">User &amp; Access Governance Control Enclave</h2>
+            <p class="text-xs text-slate-500">Manage registered institutional accounts, verify bureau officers, and authorize administrative privileges.</p>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="text-xs bg-slate-100 border border-slate-300 px-3 py-1.5 rounded-xl font-mono text-slate-700">
+              Total Accounts: <strong id="adminTotalUsersBadge">7</strong>
+            </span>
+            <button onclick="renderUsersTable()" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl" title="Refresh Users List">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric KPI Cards for Users -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[10px] font-bold text-slate-400 uppercase">Total Registered</div>
+              <div class="text-2xl font-black text-gov-navy mt-0.5" id="adminStatTotal">7</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Across all 7 ecosystem roles</div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+              👥
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[10px] font-bold text-slate-400 uppercase">Active Authorized</div>
+              <div class="text-2xl font-black text-emerald-600 mt-0.5" id="adminStatActive">7</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Full verified portal access</div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+              &check;
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-amber-300 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[10px] font-bold text-amber-600 uppercase">Pending Verification</div>
+              <div class="text-2xl font-black text-amber-700 mt-0.5" id="adminStatPending">0</div>
+              <div class="text-[10px] text-amber-600 mt-0.5">Requires admin authorization</div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold animate-pulse">
+              ⏳
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div>
+              <div class="text-[10px] font-bold text-slate-400 uppercase">Institutions &amp; Univs</div>
+              <div class="text-2xl font-black text-indigo-600 mt-0.5" id="adminStatInsts">2</div>
+              <div class="text-[10px] text-slate-500 mt-0.5">Colleges &amp; Affiliated Universities</div>
+            </div>
+            <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
+              🏛️
+            </div>
+          </div>
+        </div>
+
+        <!-- Administrative Security Policy Banner -->
+        <div class="bg-gradient-to-r from-slate-900 to-gov-navy text-white p-4 rounded-2xl border border-slate-700 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-gov-teal/20 text-gov-teal flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <div>
+              <div class="font-bold text-white">Privileged Access Policy Enforcement Active</div>
+              <div class="text-[11px] text-slate-300">Public registrations for Administrative and Bureau roles are blocked until verified and authorized below.</div>
+            </div>
+          </div>
+          <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2.5 py-1 rounded-full shrink-0">
+            GovCloud Enclave 2026
+          </span>
+        </div>
+
+        <!-- Users Directory Table Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-card overflow-hidden">
+          <div class="p-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <input type="text" id="adminUserSearch" oninput="renderUsersTable()" placeholder="Search users by name, email, or institution..." class="text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 w-64 sm:w-80 focus:outline-none focus:border-gov-teal">
+              <select id="adminRoleFilter" onchange="renderUsersTable()" class="text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:border-gov-teal">
+                <option value="ALL">All Roles</option>
+                <option value="college_inst">College / Institution</option>
+                <option value="university">University</option>
+                <option value="rb_officer">Regulation Bureau (RB)</option>
+                <option value="pgrc_officer">PGRC Officer</option>
+                <option value="ro_officer">Regional Officer</option>
+                <option value="senior_mgmt">Senior Management</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+            <div class="text-xs text-slate-500 font-medium">
+              Showing active &amp; registered platform stakeholders
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200 uppercase tracking-wider text-[10px]">
+                <tr>
+                  <th class="py-3 px-4">User &amp; Contact Details</th>
+                  <th class="py-3 px-3">Ecosystem Role</th>
+                  <th class="py-3 px-3">Organization / AICTE ID</th>
+                  <th class="py-3 px-3">Registered On</th>
+                  <th class="py-3 px-3 text-center">Status</th>
+                  <th class="py-3 px-4 text-right">Administrative Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminUsersTableBody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
         </div>
 
       </section>
@@ -1996,10 +2859,21 @@
       }
     }
 
-    // Tab Navigation
+    // Tab Navigation with Role-Based Permission Guards (Requirement 6)
     function switchTab(tabId) {
+      // 1. Permission checks
+      if (['college_inst', 'university'].includes(currentRole) && ['overlap', 'users'].includes(tabId)) {
+        showToast("Access Restricted: Overlap coordination is reserved for authorized AICTE Bureau Officers.", "warning");
+        return;
+      }
+
+      if (tabId === 'users' && currentRole !== 'admin') {
+        showToast("Access Restricted: User & Access Governance requires System Administrator privileges.", "warning");
+        return;
+      }
+
       currentActiveTab = tabId;
-      const tabs = ['dashboard', 'complaints', 'overlap', 'institutions', 'reports'];
+      const tabs = ['dashboard', 'complaints', 'overlap', 'institutions', 'reports', 'users'];
       tabs.forEach(t => {
         const content = document.getElementById(`tab-content-${t}`);
         const navBtn = document.getElementById(`nav-${t}`);
@@ -2030,10 +2904,12 @@
         renderOverlapCases();
       } else if (tabId === 'institutions') {
         renderInstitutionsTable();
+      } else if (tabId === 'users') {
+        renderUsersTable();
       }
     }
 
-    // Role Metadata Definitions for UI
+    // Role Metadata Definitions for UI (All 7 Roles)
     const ROLE_METADATA = {
       'rb_officer': {
         avatarText: 'RB',
@@ -2042,7 +2918,9 @@
         sub: 'Dr. Arvind Joshi • Director',
         officer: 'Dr. Arvind Joshi',
         badge: 'Regulation Bureau (RB) Officer',
-        avatarDisplay: 'AJ'
+        avatarDisplay: 'AJ',
+        bannerTitle: 'Regulation Bureau (RB) Regulatory Oversight',
+        bannerDesc: 'Monitoring technical institutions for regulatory compliance, 7th CPC norms, unapproved seats, and coordination with PGRC.'
       },
       'pgrc_officer': {
         avatarText: 'PG',
@@ -2051,7 +2929,9 @@
         sub: 'Smt. Sunita Sharma • Dy Director',
         officer: 'Smt. Sunita Sharma',
         badge: 'PGRC Officer',
-        avatarDisplay: 'SS'
+        avatarDisplay: 'SS',
+        bannerTitle: 'Public Grievance Redressal Cell (PGRC)',
+        bannerDesc: 'Facilitating student and faculty grievance resolution, ombudsman hearings, and certificate return orders.'
       },
       'admin': {
         avatarText: 'AD',
@@ -2060,7 +2940,9 @@
         sub: 'Full System & Bureau Access',
         officer: 'Shri K. Ramanathan',
         badge: 'System Administrator (Full Access)',
-        avatarDisplay: 'KR'
+        avatarDisplay: 'KR',
+        bannerTitle: 'System Administration & Security Governance Enclave',
+        bannerDesc: 'Full platform oversight, role permissions management, administrative authorization of pending users, and audit trail.'
       },
       'ro_officer': {
         avatarText: 'RO',
@@ -2069,7 +2951,9 @@
         sub: 'Western Region • Mumbai HQ',
         officer: 'Shri D. V. Kulkarni',
         badge: 'Western Regional Officer (WRO)',
-        avatarDisplay: 'DK'
+        avatarDisplay: 'DK',
+        bannerTitle: 'Western Regional Office (WRO - Mumbai) Monitoring',
+        bannerDesc: 'Regional compliance oversight, physical inspection verifications, and regional complaint tracking for Western states.'
       },
       'senior_mgmt': {
         avatarText: 'MS',
@@ -2078,7 +2962,31 @@
         sub: 'Advisor / Member Secretary',
         officer: 'Prof. T. G. Sitharam',
         badge: 'Senior Management (Advisor/MS)',
-        avatarDisplay: 'MS'
+        avatarDisplay: 'MS',
+        bannerTitle: 'AICTE Council Secretariat & Senior Management Overview',
+        bannerDesc: 'Council-level KPI analytics, inter-bureau disposal velocity, SLA overdue escalations, and executive compliance reports.'
+      },
+      'college_inst': {
+        avatarText: 'CI',
+        avatarBg: 'bg-gradient-to-tr from-cyan-600 to-teal-500 text-white',
+        title: 'College / Institution',
+        sub: 'Apex Inst of Tech • Dr. S. K. Raman',
+        officer: 'Dr. S. K. Raman (Principal)',
+        badge: 'Institution Representative (Apex Institute)',
+        avatarDisplay: 'SR',
+        bannerTitle: 'Institution Grievance & Compliance Portal: Apex Institute of Technology',
+        bannerDesc: 'Manage and track complaints lodged against or by your institution, respond to show-cause notices, and upload compliance reports.'
+      },
+      'university': {
+        avatarText: 'UN',
+        avatarBg: 'bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white',
+        title: 'University Authority',
+        sub: 'State Technical Univ • Dr. R. C. Mathur',
+        officer: 'Dr. R. C. Mathur (Registrar)',
+        badge: 'University Administrative Authority',
+        avatarDisplay: 'RM',
+        bannerTitle: 'University Affiliation & Grievance Coordination: State Technical University',
+        bannerDesc: 'Monitor grievance proceedings and regulatory orders across affiliated technical colleges and submit university representations.'
       }
     };
 
@@ -2131,7 +3039,7 @@
       }
     });
 
-    // Role Simulator State Synchronization
+    // Role Simulator & Authenticated Session Synchronization (All 7 Roles)
     function changeActiveRole(role, notify = true) {
       currentRole = role;
       const meta = ROLE_METADATA[role] || ROLE_METADATA['rb_officer'];
@@ -2177,9 +3085,53 @@
         }
       });
 
-      // 5. Update Hidden Native Select (maintains compatibility)
+      // 5. Update Hidden Native Select
       const selectEl = document.getElementById('roleSelector');
       if (selectEl) selectEl.value = role;
+
+      // 6. Role-Based Navigation & Permissions Enforcement (Requirement 6)
+      const navOverlap = document.getElementById('nav-overlap');
+      const navUsers = document.getElementById('nav-users');
+      const navComplaintsText = document.querySelector('#nav-complaints span');
+      const demoTriggerBtn = document.getElementById('demoTriggerBtn');
+
+      if (role === 'college_inst') {
+        if (navOverlap) navOverlap.classList.add('hidden');
+        if (navUsers) navUsers.classList.add('hidden');
+        if (navComplaintsText) navComplaintsText.textContent = 'My Complaints & Notices';
+        if (demoTriggerBtn) demoTriggerBtn.classList.add('hidden');
+        if (['overlap', 'users'].includes(currentActiveTab)) switchTab('dashboard');
+      } else if (role === 'university') {
+        if (navOverlap) navOverlap.classList.add('hidden');
+        if (navUsers) navUsers.classList.add('hidden');
+        if (navComplaintsText) navComplaintsText.textContent = 'Affiliated College Cases';
+        if (demoTriggerBtn) demoTriggerBtn.classList.add('hidden');
+        if (['overlap', 'users'].includes(currentActiveTab)) switchTab('dashboard');
+      } else if (role === 'admin') {
+        if (navOverlap) navOverlap.classList.remove('hidden');
+        if (navUsers) navUsers.classList.remove('hidden');
+        if (navComplaintsText) navComplaintsText.textContent = 'Complaint Records';
+        if (demoTriggerBtn) demoTriggerBtn.classList.remove('hidden');
+      } else {
+        // Regulatory, Senior Mgmt, RO roles
+        if (navOverlap) navOverlap.classList.remove('hidden');
+        if (navUsers) navUsers.classList.add('hidden');
+        if (navComplaintsText) navComplaintsText.textContent = 'Complaint Records';
+        if (demoTriggerBtn) demoTriggerBtn.classList.remove('hidden');
+        if (currentActiveTab === 'users') switchTab('dashboard');
+      }
+
+      // Update contextual banner headline if on dashboard
+      const bannerH2 = document.querySelector('#sihDemoBanner h2');
+      const bannerP = document.querySelector('#sihDemoBanner p');
+      if (bannerH2 && meta.bannerTitle) bannerH2.textContent = meta.bannerTitle;
+      if (bannerP && meta.bannerDesc) bannerP.textContent = meta.bannerDesc;
+
+      // Re-calculate dashboard and tables with role-scoped data
+      renderDashboardStats();
+      renderRecentComplaintsTable();
+      if (currentActiveTab === 'complaints') renderAllComplaintsTable();
+      if (currentActiveTab === 'users') renderUsersTable();
 
       if (notify) {
         showToast(`Switched active workspace to ${meta.title}`, 'info');
@@ -2362,6 +3314,7 @@
       `).join('');
     }
 
+    // Filtered Complaints with Strict Role Scope Isolation (Requirement 6)
     function getFilteredComplaints() {
       const search = (document.getElementById('filterSearch')?.value || '').toLowerCase().trim();
       const bureau = document.getElementById('filterBureau')?.value || 'ALL';
@@ -2370,6 +3323,23 @@
       const flag = document.getElementById('filterFlag')?.value || 'ALL';
 
       return complaints.filter(c => {
+        // 1. Role-based data boundaries
+        if (currentRole === 'college_inst') {
+          // College sees only their own institution's complaints
+          const instId = authenticatedUser?.aicteId || '1-3324567891';
+          const isMatch = (c.aicteId === instId) || c.instName.includes('Apex');
+          if (!isMatch) return false;
+        } else if (currentRole === 'university') {
+          // University sees affiliated colleges cases
+          const isAffiliated = c.instName.includes('Apex') || c.instName.includes('National') || c.aicteId === '1-3324567891';
+          if (!isAffiliated) return false;
+        } else if (currentRole === 'ro_officer') {
+          // Western Region complaints
+          const isWro = c.instName.includes('Apex') || c.assignedOfficer.includes('WRO') || c.assignedBureau.includes('Regulation');
+          if (!isWro && c.aicteId !== '1-3324567891') return false;
+        }
+
+        // 2. Keyword Search
         if (search) {
           const matchSearch = c.caseId.toLowerCase().includes(search) ||
                               c.instName.toLowerCase().includes(search) ||
@@ -3224,9 +4194,319 @@
     }
 
     // ==========================================
-    // 12. AUTHENTICATION & LOGIN WORKFLOW
+    // 12. USER STORE, AUTHENTICATION & ROLE GOVERNANCE
     // ==========================================
+
+    const DEFAULT_USERS = [
+      {
+        id: 'usr-1',
+        name: 'Dr. Arvind Joshi',
+        email: 'arvind.joshi@aicte-india.org',
+        role: 'rb_officer',
+        orgName: 'AICTE Headquarters (New Delhi)',
+        aicteId: 'GOV-RB-01',
+        phone: '+91 11 2958 1000',
+        status: 'active',
+        passwordHash: 'AICTE@RB2026',
+        registeredAt: '2026-01-10',
+        approvedBy: 'System Init'
+      },
+      {
+        id: 'usr-2',
+        name: 'Smt. Sunita Sharma',
+        email: 'sunita.sharma@aicte-india.org',
+        role: 'pgrc_officer',
+        orgName: 'AICTE Headquarters (New Delhi)',
+        aicteId: 'GOV-PGRC-02',
+        phone: '+91 11 2958 1002',
+        status: 'active',
+        passwordHash: 'AICTE@PGRC2026',
+        registeredAt: '2026-01-12',
+        approvedBy: 'System Init'
+      },
+      {
+        id: 'usr-3',
+        name: 'Shri K. Ramanathan',
+        email: 'admin@aicte-india.gov.in',
+        role: 'admin',
+        orgName: 'AICTE IT Enclave / NIC',
+        aicteId: 'GOV-ADM-01',
+        phone: '+91 11 2958 1010',
+        status: 'active',
+        passwordHash: 'AICTE@Admin2026',
+        registeredAt: '2026-01-01',
+        approvedBy: 'System SuperAdmin'
+      },
+      {
+        id: 'usr-4',
+        name: 'Shri D. V. Kulkarni',
+        email: 'wro.mumbai@aicte-india.org',
+        role: 'ro_officer',
+        orgName: 'Western Regional Office (Mumbai)',
+        aicteId: 'GOV-WRO-01',
+        phone: '+91 22 2285 5412',
+        status: 'active',
+        passwordHash: 'AICTE@WRO2026',
+        registeredAt: '2026-01-15',
+        approvedBy: 'System Init'
+      },
+      {
+        id: 'usr-5',
+        name: 'Prof. T. G. Sitharam',
+        email: 'advisor.ms@aicte-india.org',
+        role: 'senior_mgmt',
+        orgName: 'AICTE Council Secretariat',
+        aicteId: 'GOV-SEC-01',
+        phone: '+91 11 2958 1001',
+        status: 'active',
+        passwordHash: 'AICTE@Gov2026',
+        registeredAt: '2026-01-05',
+        approvedBy: 'Council Resolution'
+      },
+      {
+        id: 'usr-6',
+        name: 'Dr. S. K. Raman (Principal)',
+        email: 'principal@apexinstitute.edu.in',
+        role: 'college_inst',
+        orgName: 'Apex Institute of Technology & Management',
+        aicteId: '1-3324567891',
+        phone: '+91 98230 45678',
+        status: 'active',
+        passwordHash: 'Apex@Inst2026',
+        registeredAt: '2026-02-01',
+        approvedBy: 'Automated Verified Inst'
+      },
+      {
+        id: 'usr-7',
+        name: 'Dr. R. C. Mathur (Registrar)',
+        email: 'registrar@state-tech-univ.ac.in',
+        role: 'university',
+        orgName: 'State Technical University',
+        aicteId: 'UNIV-MH-010',
+        phone: '+91 94220 12345',
+        status: 'active',
+        passwordHash: 'Univ@Tech2026',
+        registeredAt: '2026-02-10',
+        approvedBy: 'Automated Verified Univ'
+      }
+    ];
+
+    let users = JSON.parse(localStorage.getItem('aicte_users_db') || 'null');
+    if (!users || !Array.isArray(users) || users.length === 0) {
+      users = DEFAULT_USERS;
+      saveUsers();
+    }
+
+    function saveUsers() {
+      localStorage.setItem('aicte_users_db', JSON.stringify(users));
+      updatePendingUsersBadge();
+    }
+
+    function updatePendingUsersBadge() {
+      const pendingCount = users.filter(u => u.status === 'pending_approval').length;
+      const sidebarBadge = document.getElementById('sidebarPendingUsersCount');
+      const adminStatPending = document.getElementById('adminStatPending');
+      if (sidebarBadge) {
+        sidebarBadge.textContent = `${pendingCount} Pending`;
+        if (pendingCount > 0) {
+          sidebarBadge.className = 'text-xs bg-amber-100 text-amber-800 border border-amber-300 px-2 py-0.5 rounded-full font-bold animate-pulse';
+        } else {
+          sidebarBadge.className = 'text-xs bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full font-medium';
+        }
+      }
+      if (adminStatPending) adminStatPending.textContent = pendingCount;
+    }
+
+    // Cryptographic Password Hash Helper (Web Crypto API SHA-256)
+    async function hashPassword(plain) {
+      try {
+        const enc = new TextEncoder();
+        const data = enc.encode("aicte_salt_2026:" + plain);
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      } catch (e) {
+        // Fallback simple deterministic hash
+        let hash = 0;
+        for (let i = 0; i < plain.length; i++) {
+          hash = ((hash << 5) - hash) + plain.charCodeAt(i);
+          hash |= 0;
+        }
+        return "h_" + Math.abs(hash);
+      }
+    }
+
     let authenticatedUser = null;
+    let lastSubmittedCaseId = "AICTE/RB/2026/0104";
+
+    // Navigation & Modal Controls
+    function showLandingPage() {
+      const landing = document.getElementById('landingPageScreen');
+      const header = document.getElementById('portalHeader');
+      const nav = document.getElementById('portalNav');
+      const app = document.getElementById('appContainer');
+
+      if (landing) landing.classList.remove('hidden');
+      if (header) header.classList.add('hidden');
+      if (nav) nav.classList.add('hidden');
+      if (app) app.classList.add('hidden');
+
+      closeLoginModal();
+      closeRegisterModal();
+      closePublicComplaintModal();
+    }
+
+    function hideLandingPage() {
+      const landing = document.getElementById('landingPageScreen');
+      const header = document.getElementById('portalHeader');
+      const nav = document.getElementById('portalNav');
+      const app = document.getElementById('appContainer');
+
+      if (landing) landing.classList.add('hidden');
+      if (header) header.classList.remove('hidden');
+      if (nav) nav.classList.remove('hidden');
+      if (app) app.classList.remove('hidden');
+    }
+
+    function showLoginModal() {
+      document.getElementById('loginModal')?.classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      document.getElementById('loginModal')?.classList.add('hidden');
+      const err = document.getElementById('loginErrorAlert');
+      if (err) err.classList.add('hidden');
+    }
+
+    function switchToLoginModal() {
+      closeRegisterModal();
+      showLoginModal();
+    }
+
+    function showRegisterModal() {
+      document.getElementById('registerModal')?.classList.remove('hidden');
+    }
+
+    function closeRegisterModal() {
+      document.getElementById('registerModal')?.classList.add('hidden');
+      const err = document.getElementById('regErrorAlert');
+      if (err) err.classList.add('hidden');
+    }
+
+    function switchToRegisterModal() {
+      closeLoginModal();
+      showRegisterModal();
+    }
+
+    function showPublicComplaintModal() {
+      document.getElementById('publicComplaintModal')?.classList.remove('hidden');
+    }
+
+    function closePublicComplaintModal() {
+      document.getElementById('publicComplaintModal')?.classList.add('hidden');
+    }
+
+    function closeTrackModal() {
+      document.getElementById('trackComplaintModal')?.classList.add('hidden');
+    }
+
+    function closeRegSuccessModal() {
+      document.getElementById('regSuccessModal')?.classList.add('hidden');
+    }
+
+    function closeComplaintConfModal() {
+      document.getElementById('complaintConfirmationModal')?.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility() {
+      const passInput = document.getElementById('loginPassword');
+      const eyeIcon = document.getElementById('eyeIcon');
+      if (!passInput) return;
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+        eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>`;
+      } else {
+        passInput.type = 'password';
+        eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>`;
+      }
+    }
+
+    // Role Field Dynamic Changes during Registration (Requirement 2 & 4)
+    function handleRoleFieldChange(role) {
+      const notice = document.getElementById('adminRoleSecurityNotice');
+      const orgLabel = document.getElementById('regOrgLabel');
+      const idLabel = document.getElementById('regAicteIdLabel');
+      const idInput = document.getElementById('regAicteId');
+
+      const isAdministrative = ['admin', 'senior_mgmt', 'rb_officer', 'pgrc_officer', 'ro_officer'].includes(role);
+
+      if (notice) {
+        if (isAdministrative) {
+          notice.classList.remove('hidden');
+        } else {
+          notice.classList.add('hidden');
+        }
+      }
+
+      if (role === 'college_inst') {
+        if (orgLabel) orgLabel.textContent = 'Institution / College Name *';
+        if (idLabel) idLabel.textContent = 'AICTE Permanent ID *';
+        if (idInput) {
+          idInput.placeholder = 'e.g. 1-3324567891';
+          idInput.required = true;
+        }
+      } else if (role === 'university') {
+        if (orgLabel) orgLabel.textContent = 'University Name *';
+        if (idLabel) idLabel.textContent = 'UGC / AICTE Recognition Code *';
+        if (idInput) {
+          idInput.placeholder = 'e.g. UNIV-MH-010';
+          idInput.required = true;
+        }
+      } else if (role === 'ro_officer') {
+        if (orgLabel) orgLabel.textContent = 'Regional Office Jurisdiction *';
+        if (idLabel) idLabel.textContent = 'AICTE Official Employee ID *';
+        if (idInput) {
+          idInput.placeholder = 'e.g. GOV-WRO-01';
+          idInput.required = false;
+        }
+      } else {
+        if (orgLabel) orgLabel.textContent = 'Bureau / Directorate Name *';
+        if (idLabel) idLabel.textContent = 'Government Employee ID *';
+        if (idInput) {
+          idInput.placeholder = 'e.g. GOV-RB-01';
+          idInput.required = false;
+        }
+      }
+    }
+
+    // Instant Evaluator 1-Click Role Login for Hackathon Judges
+    function instantLoginRole(role) {
+      const roleProfiles = {
+        'rb_officer': 'arvind.joshi@aicte-india.org',
+        'pgrc_officer': 'sunita.sharma@aicte-india.org',
+        'admin': 'admin@aicte-india.gov.in',
+        'ro_officer': 'wro.mumbai@aicte-india.org',
+        'senior_mgmt': 'advisor.ms@aicte-india.org',
+        'college_inst': 'principal@apexinstitute.edu.in',
+        'university': 'registrar@state-tech-univ.ac.in'
+      };
+
+      const email = roleProfiles[role] || 'arvind.joshi@aicte-india.org';
+      const user = users.find(u => u.email.toLowerCase() === email.toLowerCase()) || {
+        name: ROLE_METADATA[role].officer,
+        email,
+        role,
+        status: 'active'
+      };
+
+      authenticatedUser = user;
+      sessionStorage.setItem('aicte_session', JSON.stringify(authenticatedUser));
+
+      hideLandingPage();
+      closeLoginModal();
+      changeActiveRole(role, false);
+      showToast(`Authenticated as ${user.name} (${ROLE_METADATA[role].title})`, 'success');
+    }
 
     function selectDemoRole(role) {
       const emailInput = document.getElementById('loginUsername');
@@ -3237,68 +4517,534 @@
         'pgrc_officer': { email: 'sunita.sharma@aicte-india.org', pass: 'AICTE@PGRC2026' },
         'admin': { email: 'admin@aicte-india.gov.in', pass: 'AICTE@Admin2026' },
         'ro_officer': { email: 'wro.mumbai@aicte-india.org', pass: 'AICTE@WRO2026' },
-        'senior_mgmt': { email: 'advisor.ms@aicte-india.org', pass: 'AICTE@Gov2026' }
+        'senior_mgmt': { email: 'advisor.ms@aicte-india.org', pass: 'AICTE@Gov2026' },
+        'college_inst': { email: 'principal@apexinstitute.edu.in', pass: 'Apex@Inst2026' },
+        'university': { email: 'registrar@state-tech-univ.ac.in', pass: 'Univ@Tech2026' }
       };
 
-      if (roleCredentials[role]) {
+      if (roleCredentials[role] && emailInput && passInput) {
         emailInput.value = roleCredentials[role].email;
         passInput.value = roleCredentials[role].pass;
-        currentRole = role;
-        document.getElementById('roleSelector').value = role;
-        changeActiveRole(role);
-        showToast(`Selected Demo Profile: ${role.toUpperCase()}`, 'info');
+        showToast(`Loaded credentials for ${ROLE_METADATA[role].title}`, 'info');
       }
     }
 
-    function togglePasswordVisibility() {
-      const passInput = document.getElementById('loginPassword');
-      const eyeIcon = document.getElementById('eyeIcon');
-      if (passInput.type === 'password') {
-        passInput.type = 'text';
-        eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"></path>`;
-      } else {
-        passInput.type = 'password';
-        eyeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>`;
-      }
-    }
-
-    function handleLoginSubmit(event) {
+    // Registration Submission Handler (Requirement 4)
+    async function handleRegisterSubmit(event) {
       event.preventDefault();
-      const email = document.getElementById('loginUsername').value.trim();
-      const pass = document.getElementById('loginPassword').value;
+      const errBox = document.getElementById('regErrorAlert');
+      const errText = document.getElementById('regErrorText');
+      if (errBox) errBox.classList.add('hidden');
 
-      if (!email || !pass) {
-        alert("Please enter valid credentials.");
+      const role = document.getElementById('regRole').value;
+      const orgName = document.getElementById('regOrgName').value.trim();
+      const aicteId = document.getElementById('regAicteId').value.trim();
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim().toLowerCase();
+      const phone = document.getElementById('regPhone').value.trim();
+      const pass = document.getElementById('regPassword').value;
+      const confirmPass = document.getElementById('regConfirmPassword').value;
+
+      // 1. Password validation
+      if (pass.length < 8) {
+        if (errText) errText.textContent = "Password must be at least 8 characters long.";
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
+      if (pass !== confirmPass) {
+        if (errText) errText.textContent = "Passwords do not match. Please re-enter identical passwords.";
+        if (errBox) errBox.classList.remove('hidden');
         return;
       }
 
-      authenticatedUser = { email, role: currentRole };
-      sessionStorage.setItem('aicte_session', JSON.stringify(authenticatedUser));
+      // 2. Duplicate email check
+      if (users.some(u => u.email.toLowerCase() === email)) {
+        if (errText) errText.textContent = `Email "${email}" is already registered. Please log in or use a different email.`;
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
 
-      // Hide login screen
-      const loginOverlay = document.getElementById('loginScreen');
-      loginOverlay.classList.add('opacity-0', 'transition-opacity', 'duration-300');
-      setTimeout(() => {
-        loginOverlay.classList.add('hidden');
-        showToast(`Authenticated as ${document.getElementById('userNameDisplay').textContent}`, 'success');
-        updateCharts();
-      }, 300);
+      // 3. Administrative Security Rule:
+      // Administrative roles (admin, senior_mgmt, rb_officer, pgrc_officer, ro_officer)
+      // must NOT receive privileged access simply by selecting their role during public registration.
+      // They are placed in 'pending_approval' until authorized by an Admin.
+      const isPrivilegedRole = ['admin', 'senior_mgmt', 'rb_officer', 'pgrc_officer', 'ro_officer'].includes(role);
+      const userStatus = isPrivilegedRole ? 'pending_approval' : 'active';
+
+      const hashed = await hashPassword(pass);
+
+      const newUser = {
+        id: 'usr-' + Date.now(),
+        name,
+        email,
+        role,
+        orgName: orgName || (role === 'college_inst' ? 'Technical College' : role === 'university' ? 'State University' : 'AICTE Authority'),
+        aicteId: aicteId || (role === 'college_inst' ? '1-9999999999' : 'GOV-REG-01'),
+        phone,
+        status: userStatus,
+        passwordHash: hashed,
+        registeredAt: new Date().toISOString().split('T')[0]
+      };
+
+      users.push(newUser);
+      saveUsers();
+
+      closeRegisterModal();
+
+      // Show success modal with distinct messaging
+      const titleEl = document.getElementById('regSuccessTitle');
+      const msgEl = document.getElementById('regSuccessMessage');
+
+      if (isPrivilegedRole) {
+        if (titleEl) titleEl.textContent = "Registration Under Verification";
+        if (msgEl) msgEl.innerHTML = `Your registration as <strong>${ROLE_METADATA[role].title}</strong> has been logged. Under AICTE Security Policy, administrative and regulatory roles require verification by an authorized Administrator before privileged access is granted. You will be notified upon approval.`;
+      } else {
+        if (titleEl) titleEl.textContent = "Institution Account Created!";
+        if (msgEl) msgEl.innerHTML = `Your account for <strong>${orgName || name}</strong> has been successfully registered and activated. You can now sign in to track and submit institutional complaints.`;
+      }
+
+      document.getElementById('regSuccessModal')?.classList.remove('hidden');
+      showToast("Registration submitted successfully.", "success");
     }
 
+    // Login Submission Handler (Requirement 3)
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+      const email = document.getElementById('loginUsername').value.trim().toLowerCase();
+      const pass = document.getElementById('loginPassword').value;
+      const errBox = document.getElementById('loginErrorAlert');
+      const errText = document.getElementById('loginErrorText');
+
+      if (errBox) errBox.classList.add('hidden');
+
+      if (!email || !pass) {
+        if (errText) errText.textContent = "Please enter both official email and password.";
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
+
+      // Find user
+      const user = users.find(u => u.email.toLowerCase() === email);
+      if (!user) {
+        if (errText) errText.textContent = "Account not found for this email address. Please register or verify the entered email.";
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
+
+      // Verify Password (plain match for pre-seeded or hashed for newly registered)
+      const hashed = await hashPassword(pass);
+      const isPassCorrect = (user.passwordHash === pass) || (user.passwordHash === hashed);
+      if (!isPassCorrect) {
+        if (errText) errText.textContent = "Incorrect password. Please verify and try again.";
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
+
+      // Privilege Verification Enforcement: Block unapproved administrative registrations
+      if (user.status === 'pending_approval') {
+        if (errText) errText.textContent = "Access Restricted: This administrative role requires verification by an authorized AICTE Administrator. Your registration is currently pending review.";
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
+
+      if (user.status === 'suspended') {
+        if (errText) errText.textContent = "Account Suspended: This account has been deactivated by the system administrator.";
+        if (errBox) errBox.classList.remove('hidden');
+        return;
+      }
+
+      // Successful Login
+      authenticatedUser = user;
+      sessionStorage.setItem('aicte_session', JSON.stringify(authenticatedUser));
+
+      closeLoginModal();
+      hideLandingPage();
+
+      // Navigate to role workspace
+      changeActiveRole(user.role, false);
+      showToast(`Welcome back, ${user.name}! Authenticated as ${ROLE_METADATA[user.role].title}`, 'success');
+      updateCharts();
+    }
+
+    // Sign Out
     function handleLogout() {
       if (confirm("Sign out of the AICTE Complaint Monitoring & Tracking Dashboard session?")) {
         sessionStorage.removeItem('aicte_session');
         authenticatedUser = null;
-        const loginOverlay = document.getElementById('loginScreen');
-        loginOverlay.classList.remove('hidden', 'opacity-0');
+        showLandingPage();
         showToast("Signed out successfully. Session terminated.", "info");
       }
     }
 
-    // Initialize application when DOM is ready
+    // Public Complaint Submission Handler (Requirement 5)
+    function populatePublicInstData(instId) {
+      const customDiv = document.getElementById('pubCustomInstContainer');
+      const aicteIdInput = document.getElementById('pubAicteId');
+
+      if (instId === 'OTHER') {
+        if (customDiv) customDiv.classList.remove('hidden');
+        if (aicteIdInput) {
+          aicteIdInput.value = '';
+          aicteIdInput.readOnly = false;
+        }
+      } else if (instId) {
+        if (customDiv) customDiv.classList.add('hidden');
+        if (aicteIdInput) {
+          aicteIdInput.value = instId;
+          aicteIdInput.readOnly = true;
+        }
+      }
+    }
+
+    function handleDocSelected(input) {
+      const label = document.getElementById('pubDocLabel');
+      if (input.files && input.files[0]) {
+        if (label) label.textContent = `Attached: ${input.files[0].name} (${(input.files[0].size / 1024 / 1024).toFixed(2)} MB)`;
+      }
+    }
+
+    function handlePublicComplaintSubmit(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('pubCompName').value.trim();
+      const email = document.getElementById('pubCompEmail').value.trim();
+      const compType = document.getElementById('pubCompType').value;
+      const instSelect = document.getElementById('pubInstSelect');
+      const instSelectVal = instSelect.value;
+      let instName = instSelect.options[instSelect.selectedIndex].text;
+      if (instSelectVal === 'OTHER') {
+        instName = document.getElementById('pubCustomInstName').value.trim() || 'Unlisted Technical College';
+      } else if (instName.includes('(')) {
+        instName = instName.split('(')[0].trim();
+      }
+
+      const aicteId = document.getElementById('pubAicteId').value.trim();
+      const category = document.getElementById('pubCategory').value;
+      const bureau = document.getElementById('pubBureau').value;
+      const title = document.getElementById('pubTitle').value.trim();
+      const description = document.getElementById('pubDescription').value.trim();
+
+      // Generate Reference ID based on Bureau
+      const prefix = bureau.includes('Regulation') ? 'AICTE/RB/2026/' : bureau.includes('Grievance') ? 'AICTE/PGRC/2026/' : 'AICTE/COMP/2026/';
+      const caseNumber = String(120 + complaints.length).padStart(4, '0');
+      const caseId = prefix + caseNumber;
+      lastSubmittedCaseId = caseId;
+
+      const newComplaint = {
+        caseId,
+        aicteId: aicteId || "1-3324567891",
+        instName,
+        category,
+        title,
+        description,
+        complainantType: compType,
+        dateReceived: new Date().toISOString().split('T')[0],
+        assignedBureau: bureau,
+        assignedOfficer: bureau.includes('Regulation') ? "Dr. Arvind Joshi (Director, RB)" : "Smt. Sunita Sharma (Deputy Director, PGRC)",
+        priority: "High",
+        status: "Pending",
+        lastAction: "Formal grievance petition registered via AICTE Public Intake Portal",
+        lastActionDate: new Date().toISOString().split('T')[0],
+        nextAction: "Initial scrutiny by scrutiny committee and automated overlap check",
+        expectedDisposalDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        isOverdue: false,
+        ageInDays: 0,
+        docs: [
+          { name: "Public_Grievance_Petition_Signed.pdf", size: "1.8 MB" }
+        ],
+        linkedCaseIds: [],
+        timeline: [
+          {
+            date: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+            officer: "Public Grievance Grid",
+            bureau: bureau.includes('Regulation') ? 'RB' : 'PGRC',
+            action: "Complaint Lodged",
+            remarks: `Submitted by ${name} (${compType}). Registered for inquiry.`
+          }
+        ]
+      };
+
+      // Add to repository
+      complaints.unshift(newComplaint);
+      saveData();
+
+      // Run overlap scan and check if overlaps exist
+      const overlaps = findPotentialOverlaps();
+      const hasOverlap = overlaps.some(o => o.caseA.caseId === caseId || o.caseB.caseId === caseId);
+
+      if (hasOverlap) {
+        notifications.unshift({
+          id: 'nt-' + Date.now(),
+          title: 'Immediate Overlap Detected on Intake',
+          desc: `New case ${caseId} (${instName}) correlates with existing active proceeding.`,
+          time: 'Just now',
+          type: 'OVERLAP',
+          targetCase: caseId,
+          read: false
+        });
+        renderNotifications();
+      }
+
+      // Close submission modal
+      closePublicComplaintModal();
+
+      // Populate confirmation modal
+      document.getElementById('confCaseId').textContent = caseId;
+      document.getElementById('confInstName').textContent = instName;
+      document.getElementById('confBureau').textContent = bureau;
+
+      const confModal = document.getElementById('complaintConfirmationModal');
+      if (confModal) confModal.classList.remove('hidden');
+
+      showToast(`Complaint registered successfully. Assigned Reference ID: ${caseId}`, "success");
+      renderDashboardStats();
+    }
+
+    // Public Case Tracking by Reference Number
+    function handlePublicTrackSubmit(event) {
+      event.preventDefault();
+      const trackId = document.getElementById('publicTrackId').value.trim();
+      trackComplaintPublic(trackId);
+    }
+
+    function trackComplaintPublic(caseId) {
+      if (!caseId) {
+        caseId = document.getElementById('publicTrackId')?.value.trim();
+      }
+      if (!caseId) {
+        showToast("Please enter an AICTE Case ID to track.", "warning");
+        return;
+      }
+
+      const found = complaints.find(c => c.caseId.toLowerCase() === caseId.toLowerCase());
+      if (!found) {
+        showToast(`Case ID "${caseId}" not found in AICTE records. Please verify the number.`, "warning");
+        return;
+      }
+
+      document.getElementById('trackModalCaseId').textContent = found.caseId;
+      const body = document.getElementById('trackModalBody');
+
+      body.innerHTML = `
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
+            <div>
+              <div class="text-[10px] uppercase font-bold text-slate-400">Target Institution</div>
+              <div class="font-extrabold text-slate-900 text-sm">${found.instName}</div>
+              <div class="text-[10px] font-mono text-slate-500">AICTE Permanent ID: ${found.aicteId}</div>
+            </div>
+            <div class="text-right">
+              ${getStatusBadge(found.status)}
+              <div class="mt-1">${getPriorityBadge(found.priority)}</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] pt-1">
+            <div>
+              <span class="text-slate-400 block text-[9px] uppercase font-bold">Assigned Bureau</span>
+              <strong class="text-blue-900">${found.assignedBureau}</strong>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[9px] uppercase font-bold">Assigned Officer</span>
+              <span class="text-slate-700">${found.assignedOfficer}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[9px] uppercase font-bold">Lodged On</span>
+              <span class="text-slate-700">${found.dateReceived}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block text-[9px] uppercase font-bold">Expected SLA</span>
+              <span class="text-emerald-700 font-bold">${found.expectedDisposalDate}</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-800 text-xs mb-2">Four-Stage Redressal Progress</h4>
+          <div class="grid grid-cols-4 gap-1.5 text-center text-[10px] font-bold">
+            <div class="p-2 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-300">
+              &check; 1. Lodged
+            </div>
+            <div class="p-2 rounded-lg ${found.status !== 'Pending' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-blue-100 text-blue-800 border border-blue-300 animate-pulse'}">
+              ${found.status !== 'Pending' ? '&check; 2. Admitted' : '2. Scrutiny'}
+            </div>
+            <div class="p-2 rounded-lg ${['Under Process', 'Disposed'].includes(found.status) ? 'bg-blue-100 text-blue-800 border border-blue-300 font-extrabold' : 'bg-slate-100 text-slate-400'}">
+              3. Inquiry / Notice
+            </div>
+            <div class="p-2 rounded-lg ${found.status === 'Disposed' ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-400'}">
+              4. Resolution
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-bold text-slate-800 text-xs mb-1">Latest Official Action</h4>
+          <p class="text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            ${found.lastAction}
+          </p>
+          <div class="text-[10px] text-slate-400 mt-1">Recorded on: ${found.lastActionDate || found.dateReceived}</div>
+        </div>
+      `;
+
+      document.getElementById('trackComplaintModal')?.classList.remove('hidden');
+    }
+
+    // Admin User & Access Control Management (Requirement 2 & 6)
+    function renderUsersTable() {
+      const tbody = document.getElementById('adminUsersTableBody');
+      if (!tbody) return;
+
+      const search = (document.getElementById('adminUserSearch')?.value || '').toLowerCase().trim();
+      const roleFilter = document.getElementById('adminRoleFilter')?.value || 'ALL';
+
+      const filtered = users.filter(u => {
+        if (roleFilter !== 'ALL' && u.role !== roleFilter) return false;
+        if (search) {
+          const match = u.name.toLowerCase().includes(search) ||
+                        u.email.toLowerCase().includes(search) ||
+                        (u.orgName && u.orgName.toLowerCase().includes(search)) ||
+                        (u.aicteId && u.aicteId.toLowerCase().includes(search));
+          if (!match) return false;
+        }
+        return true;
+      });
+
+      // Update stat counters
+      const totalCount = users.length;
+      const activeCount = users.filter(u => u.status === 'active').length;
+      const pendingCount = users.filter(u => u.status === 'pending_approval').length;
+      const instCount = users.filter(u => ['college_inst', 'university'].includes(u.role)).length;
+
+      document.getElementById('adminStatTotal').textContent = totalCount;
+      document.getElementById('adminStatActive').textContent = activeCount;
+      document.getElementById('adminStatPending').textContent = pendingCount;
+      document.getElementById('adminStatInsts').textContent = instCount;
+      document.getElementById('adminTotalUsersBadge').textContent = totalCount;
+
+      updatePendingUsersBadge();
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="p-8 text-center text-slate-400">
+              No registered user accounts match the selected criteria.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(u => {
+        const meta = ROLE_METADATA[u.role] || ROLE_METADATA['admin'];
+        const isPending = u.status === 'pending_approval';
+        const isSuspended = u.status === 'suspended';
+
+        let statusBadge = `<span class="badge bg-emerald-100 text-emerald-800 border border-emerald-300">&check; Active</span>`;
+        if (isPending) {
+          statusBadge = `<span class="badge bg-amber-100 text-amber-800 border border-amber-300 animate-pulse">⏳ Pending Authorization</span>`;
+        } else if (isSuspended) {
+          statusBadge = `<span class="badge bg-slate-200 text-slate-700">Deactivated</span>`;
+        }
+
+        return `
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="py-3 px-4">
+              <div class="font-bold text-slate-800 text-xs">${u.name}</div>
+              <div class="text-[11px] text-slate-500 font-mono">${u.email}</div>
+              ${u.phone ? `<div class="text-[10px] text-slate-400">${u.phone}</div>` : ''}
+            </td>
+            <td class="py-3 px-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold ${meta.avatarBg}">
+                ${u.role.toUpperCase()}
+              </span>
+              <div class="text-[10px] text-slate-600 mt-0.5 font-medium">${meta.title}</div>
+            </td>
+            <td class="py-3 px-3">
+              <div class="font-bold text-slate-800 text-xs">${u.orgName || '--'}</div>
+              <div class="text-[10px] font-mono text-slate-500">${u.aicteId || '--'}</div>
+            </td>
+            <td class="py-3 px-3 text-slate-500 text-[11px]">
+              ${u.registeredAt || '2026-01-01'}
+            </td>
+            <td class="py-3 px-3 text-center">
+              ${statusBadge}
+            </td>
+            <td class="py-3 px-4 text-right">
+              ${isPending ? `
+                <div class="flex items-center justify-end gap-1.5">
+                  <button onclick="approveUserAccess('${u.id}')" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[10px] font-bold transition-all shadow-sm">
+                    &check; Authorize
+                  </button>
+                  <button onclick="rejectUserAccess('${u.id}')" class="px-2.5 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-[10px] font-bold transition-all">
+                    Reject
+                  </button>
+                </div>
+              ` : `
+                <button onclick="toggleUserStatus('${u.id}')" class="text-xs font-semibold ${isSuspended ? 'text-emerald-600 hover:underline' : 'text-slate-400 hover:text-rose-600'}">
+                  ${isSuspended ? 'Reactivate' : 'Suspend'}
+                </button>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function approveUserAccess(userId) {
+      const u = users.find(x => x.id === userId);
+      if (u) {
+        u.status = 'active';
+        u.approvedBy = 'Administrator (' + (authenticatedUser?.name || 'Shri K. Ramanathan') + ')';
+        u.approvedAt = new Date().toISOString().split('T')[0];
+        saveUsers();
+        renderUsersTable();
+        showToast(`Authorized access granted to ${u.name} as ${ROLE_METADATA[u.role].title}`, 'success');
+      }
+    }
+
+    function rejectUserAccess(userId) {
+      const u = users.find(x => x.id === userId);
+      if (u && confirm(`Reject registration request for ${u.name}?`)) {
+        u.status = 'suspended';
+        saveUsers();
+        renderUsersTable();
+        showToast(`Registration rejected for ${u.name}.`, 'info');
+      }
+    }
+
+    function toggleUserStatus(userId) {
+      const u = users.find(x => x.id === userId);
+      if (u) {
+        u.status = u.status === 'active' ? 'suspended' : 'active';
+        saveUsers();
+        renderUsersTable();
+        showToast(`User ${u.name} status updated to ${u.status.toUpperCase()}.`, 'info');
+      }
+    }
+
+    // App Initialization on DOM Ready
     window.addEventListener('DOMContentLoaded', () => {
       initUI();
+
+      // Check session
+      const savedSession = sessionStorage.getItem('aicte_session');
+      if (savedSession) {
+        try {
+          authenticatedUser = JSON.parse(savedSession);
+          if (authenticatedUser && authenticatedUser.role) {
+            hideLandingPage();
+            changeActiveRole(authenticatedUser.role, false);
+            return;
+          }
+        } catch (e) {
+          sessionStorage.removeItem('aicte_session');
+        }
+      }
+
+      // Default: Display landing page first (Requirement 1)
+      showLandingPage();
     });
+
   </script>
 </body>
 </html>
