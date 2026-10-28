@@ -175,3 +175,7 @@ scratch/
 tmp/
 temp/
 
+# Python cache
+__pycache__/
+*.pyc
+
